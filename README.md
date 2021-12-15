@@ -1,3 +1,3 @@
-# TP FINAL - RAY TRACING
+# RAY TRACING ENGINE - Final Project Computer Graphics UBA
 
-Ray Tracing en javascript
+Inspired in Ray Tracing books from Peter Shirley.
