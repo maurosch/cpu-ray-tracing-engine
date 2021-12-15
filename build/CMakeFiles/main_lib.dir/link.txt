@@ -1,0 +1,2 @@
+/usr/bin/ar qc libmain_lib.a CMakeFiles/main_lib.dir/src/hittables/space_divider.cpp.o CMakeFiles/main_lib.dir/src/hittables/triangle_mesh.cpp.o
+/usr/bin/ranlib libmain_lib.a
