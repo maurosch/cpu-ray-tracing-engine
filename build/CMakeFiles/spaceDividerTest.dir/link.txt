@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.o -o spaceDividerTest  libmain_lib.a lib/libgtest_maind.a lib/libgtestd.a -lpthread 
