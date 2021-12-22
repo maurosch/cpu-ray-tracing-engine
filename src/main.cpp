@@ -41,7 +41,7 @@ color ray_color(const ray& r, const HittableList& world, int depth) {
 }
 
 HittableList random_scene() {
-    std::cerr << "LOADING ASSETS..." << endl;
+    cerr << "LOADING ASSETS..." << endl;
     HittableList world;
 
     auto ground_material = make_shared<lambertian>(color(0.5, 0.5, 0.5));
@@ -126,10 +126,10 @@ int main() {
     camera cam(lookfrom, lookat, vup, 20, aspect_ratio, aperture, dist_to_focus);
 
     // Render
-    std::cerr << "SAMPLES PER PIXEL: " << samples_per_pixel << std::endl;
-    std::cerr << "RAY DEPTH: " << max_depth << std::endl;
-    std::cerr << "RENDER DIMENSION: " << image_width << "x" << image_height << std::endl;
-    std::vector<std::vector<vec3>> finalImage = std::vector<std::vector<vec3>>(image_height, std::vector<vec3>(image_width));
+    cerr << "SAMPLES PER PIXEL: " << samples_per_pixel << endl;
+    cerr << "RAY DEPTH: " << max_depth << endl;
+    cerr << "RENDER DIMENSION: " << image_width << "x" << image_height << endl;
+    vector<vector<vec3>> finalImage = vector<vector<vec3>>(image_height, vector<vec3>(image_width));
 
     #ifdef DO_NOT_USE_THREADS
         auto percentageIndicator = PercentageIndicator();
@@ -148,22 +148,17 @@ int main() {
             }
         }     
     #else   
-        auto processor_count = std::thread::hardware_concurrency();
+        auto processor_count = thread::hardware_concurrency();
         if(processor_count == 0) processor_count = 1;
-        std::cerr << "AMOUNT CORES: " << processor_count << std::endl;
+        cerr << "AMOUNT CORES: " << processor_count << endl;
 
         bool finished = false;
         MulticorePercentageIndicator percentageIndicator = MulticorePercentageIndicator(processor_count);
-        auto printerPercentage = std::thread([&]() {
-            while(!finished) {
-                percentageIndicator.print();
-                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-            }
-        });
+        percentageIndicator.startPrinting();
 
-        std::vector<std::thread> threads;
+        vector<thread> threads;
         for(int p = 0; p < processor_count; p++){
-            threads.push_back(std::thread([&] (int numberProcessor) {
+            threads.push_back(thread([&] (int numberProcessor) {
                 int initial = image_height/processor_count*numberProcessor;
                 int ending = image_height/processor_count*(numberProcessor+1);
                 for (int j = initial; j < ending; j++) {
@@ -185,8 +180,7 @@ int main() {
         for(int i = 0; i < processor_count; i++){
             threads[i].join();
         }
-        finished = true;
-        printerPercentage.join();
+        percentageIndicator.stopPrinting();
     #endif
 
     ofstream fout("img.ppm");
@@ -200,5 +194,5 @@ int main() {
     }
     fout.close();
 
-    std::cerr << "\nDone.\n";
+    cerr << "\nDone.\n";
 }

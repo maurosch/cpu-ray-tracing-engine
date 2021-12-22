@@ -51,11 +51,26 @@ class PercentageIndicator {
 class MulticorePercentageIndicator {
     std::vector<PercentageIndicator> percentages;
     int amount_cores;
+    bool keepPrinting;
+    std::thread printerThread;
 
     public:
         MulticorePercentageIndicator(int _amount_cores){
             percentages = std::vector<PercentageIndicator>(_amount_cores);
             amount_cores = _amount_cores;
+        }
+        void startPrinting(){
+            keepPrinting = true;
+            printerThread = std::thread([&]() {
+                while(keepPrinting) {
+                    print();
+                    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+                }
+            });
+        }
+        void stopPrinting(){
+            keepPrinting = false;
+            printerThread.join();
         }
         void update(int coreNumber, float newPercentage){
             percentages[coreNumber].update(newPercentage);

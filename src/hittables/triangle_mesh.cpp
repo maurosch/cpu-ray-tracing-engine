@@ -119,14 +119,14 @@ bool TriangleMesh::hit(const ray& r, double t_min, double t_max, HitRecord& rec)
     HitRecord recordHitTriangle;
     rec.t = t_max;
     bool hasHitted = false;
-    if(boundingBox.hit(r, t_min, t_max, rec)){
-        for(int i = 0; i < innerTriangles.size(); i++){
-            if(innerTriangles[i].hit(r, t_min, t_max, recordHitTriangle) && recordHitTriangle.t < rec.t){
-                hasHitted = true;
-                rec = recordHitTriangle;
-            }
+    //if(boundingBox.hit(r, t_min, t_max, rec)){
+    for(int i = 0; i < innerTriangles.size(); i++){
+        if(innerTriangles[i].hit(r, t_min, t_max, recordHitTriangle) && recordHitTriangle.t < rec.t){
+            hasHitted = true;
+            rec = recordHitTriangle;
         }
     }
+    //}
     return hasHitted;
 }
 

@@ -4,21 +4,11 @@ project(my_project)
 # GoogleTest requires at least C++11
 set(CMAKE_CXX_STANDARD 11)
 
-
-file (GLOB_RECURSE Foo_SOURCES CONFIGURE_DEPENDS "src/*.cpp")
-file (GLOB_RECURSE Foo_HEADERS CONFIGURE_DEPENDS "src/*.h")
-
-set (Foo_INCLUDE_DIRS "")
-foreach (_headerFile ${Foo_HEADERS})
-    get_filename_component(_dir ${_headerFile} PATH)
-    list (APPEND Foo_INCLUDE_DIRS ${_dir})
-endforeach()
-list (REMOVE_DUPLICATES Foo_INCLUDE_DIRS)
-
-add_executable(main ${Foo_SOURCES} main.cpp)
-add_library(main_lib ${Foo_SOURCES})
-target_include_directories(main PRIVATE ${Foo_INCLUDE_DIRS})
-
+add_executable(main
+  src/main.cpp
+  src/hittables/space_divider.cpp
+  src/hittables/triangle_mesh.cpp
+)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -39,9 +29,11 @@ enable_testing()
 add_executable(
   spaceDividerTest
   tests/spaceDividerTest.cpp
+  src/hittables/space_divider.cpp
+  src/hittables/triangle_mesh.cpp
 )
 
-target_link_libraries(spaceDividerTest main_lib gtest_main)
+target_link_libraries(spaceDividerTest gtest_main)
 
 include(GoogleTest)
 gtest_discover_tests(spaceDividerTest)
