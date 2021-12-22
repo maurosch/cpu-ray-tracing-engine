@@ -1,5 +1,5 @@
-if(EXISTS "/home/mauro/Documents/computacion-grafica/tp-final/build/spaceDividerTest[1]_tests.cmake")
-  include("/home/mauro/Documents/computacion-grafica/tp-final/build/spaceDividerTest[1]_tests.cmake")
+if(EXISTS "/home/mauro/Documents/cpu-ray-tracing-engine/build/spaceDividerTest[1]_tests.cmake")
+  include("/home/mauro/Documents/cpu-ray-tracing-engine/build/spaceDividerTest[1]_tests.cmake")
 else()
   add_test(spaceDividerTest_NOT_BUILT spaceDividerTest_NOT_BUILT)
 endif()

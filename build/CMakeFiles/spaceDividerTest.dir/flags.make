@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -isystem /home/mauro/Documents/computacion-grafica/tp-final/build/_deps/googletest-src/googletest/include -isystem /home/mauro/Documents/computacion-grafica/tp-final/build/_deps/googletest-src/googletest
+CXX_INCLUDES = -isystem /home/mauro/Documents/cpu-ray-tracing-engine/build/_deps/googletest-src/googletest/include -isystem /home/mauro/Documents/cpu-ray-tracing-engine/build/_deps/googletest-src/googletest
 
 CXX_FLAGS = -g -std=gnu++11
 

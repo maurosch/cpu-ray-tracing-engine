@@ -1,7 +1,7 @@
 CMakeFiles/main.dir/src/hittables/space_divider.cpp.o: \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/space_divider.cpp \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/space_divider.cpp \
  /usr/include/stdc-predef.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/space_divider.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/space_divider.h \
  /usr/include/c++/11.1.0/set /usr/include/c++/11.1.0/bits/stl_tree.h \
  /usr/include/c++/11.1.0/bits/stl_algobase.h \
  /usr/include/c++/11.1.0/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -41,9 +41,9 @@ CMakeFiles/main.dir/src/hittables/space_divider.cpp.o: \
  /usr/include/c++/11.1.0/bits/stl_multiset.h \
  /usr/include/c++/11.1.0/bits/range_access.h \
  /usr/include/c++/11.1.0/bits/erase_if.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/hittable.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/../ray.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/../vec3.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/hittable.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/../ray.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/../vec3.h \
  /usr/include/c++/11.1.0/cmath /usr/include/math.h \
  /usr/include/bits/libc-header-start.h /usr/include/bits/types.h \
  /usr/include/bits/timesize.h /usr/include/bits/typesizes.h \
@@ -141,7 +141,7 @@ CMakeFiles/main.dir/src/hittables/space_divider.cpp.o: \
  /usr/include/c++/11.1.0/bits/basic_ios.tcc \
  /usr/include/c++/11.1.0/bits/ostream.tcc /usr/include/c++/11.1.0/istream \
  /usr/include/c++/11.1.0/bits/istream.tcc \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/../rtweekend.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/../rtweekend.h \
  /usr/include/c++/11.1.0/limits /usr/include/c++/11.1.0/memory \
  /usr/include/c++/11.1.0/bits/stl_uninitialized.h \
  /usr/include/c++/11.1.0/bits/stl_tempbuf.h \
@@ -161,10 +161,10 @@ CMakeFiles/main.dir/src/hittables/space_divider.cpp.o: \
  /usr/include/c++/11.1.0/bits/atomic_base.h \
  /usr/include/c++/11.1.0/bits/atomic_lockfree_defines.h \
  /usr/include/c++/11.1.0/backward/auto_ptr.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/box.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/box.h \
  /usr/include/c++/11.1.0/vector /usr/include/c++/11.1.0/bits/stl_vector.h \
  /usr/include/c++/11.1.0/bits/stl_bvector.h \
  /usr/include/c++/11.1.0/bits/vector.tcc \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/../vec3.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/square.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/triangle.h
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/../vec3.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/square.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/triangle.h

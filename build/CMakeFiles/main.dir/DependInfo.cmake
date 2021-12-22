@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/mauro/Documents/computacion-grafica/tp-final/main.cpp" "CMakeFiles/main.dir/main.cpp.o" "gcc" "CMakeFiles/main.dir/main.cpp.o.d"
-  "/home/mauro/Documents/computacion-grafica/tp-final/src/hittables/space_divider.cpp" "CMakeFiles/main.dir/src/hittables/space_divider.cpp.o" "gcc" "CMakeFiles/main.dir/src/hittables/space_divider.cpp.o.d"
-  "/home/mauro/Documents/computacion-grafica/tp-final/src/hittables/triangle_mesh.cpp" "CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.o" "gcc" "CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.o.d"
+  "/home/mauro/Documents/cpu-ray-tracing-engine/main.cpp" "CMakeFiles/main.dir/main.cpp.o" "gcc" "CMakeFiles/main.dir/main.cpp.o.d"
+  "/home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/space_divider.cpp" "CMakeFiles/main.dir/src/hittables/space_divider.cpp.o" "gcc" "CMakeFiles/main.dir/src/hittables/space_divider.cpp.o.d"
+  "/home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/triangle_mesh.cpp" "CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.o" "gcc" "CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.o.d"
   )
 
 # Targets to which this target links.

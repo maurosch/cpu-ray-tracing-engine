@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mauro/Documents/computacion-grafica/tp-final
+CMAKE_SOURCE_DIR = /home/mauro/Documents/cpu-ray-tracing-engine
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mauro/Documents/computacion-grafica/tp-final/build
+CMAKE_BINARY_DIR = /home/mauro/Documents/cpu-ray-tracing-engine/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/main.dir/depend.make
@@ -72,44 +72,44 @@ include CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/hittables/space_divider.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/hittables/space_divider.cpp.o: ../src/hittables/space_divider.cpp
 CMakeFiles/main.dir/src/hittables/space_divider.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mauro/Documents/computacion-grafica/tp-final/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main.dir/src/hittables/space_divider.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/src/hittables/space_divider.cpp.o -MF CMakeFiles/main.dir/src/hittables/space_divider.cpp.o.d -o CMakeFiles/main.dir/src/hittables/space_divider.cpp.o -c /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/space_divider.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mauro/Documents/cpu-ray-tracing-engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main.dir/src/hittables/space_divider.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/src/hittables/space_divider.cpp.o -MF CMakeFiles/main.dir/src/hittables/space_divider.cpp.o.d -o CMakeFiles/main.dir/src/hittables/space_divider.cpp.o -c /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/space_divider.cpp
 
 CMakeFiles/main.dir/src/hittables/space_divider.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/src/hittables/space_divider.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/space_divider.cpp > CMakeFiles/main.dir/src/hittables/space_divider.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/space_divider.cpp > CMakeFiles/main.dir/src/hittables/space_divider.cpp.i
 
 CMakeFiles/main.dir/src/hittables/space_divider.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/hittables/space_divider.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/space_divider.cpp -o CMakeFiles/main.dir/src/hittables/space_divider.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/space_divider.cpp -o CMakeFiles/main.dir/src/hittables/space_divider.cpp.s
 
 CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.o: ../src/hittables/triangle_mesh.cpp
 CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mauro/Documents/computacion-grafica/tp-final/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.o -MF CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.o.d -o CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.o -c /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/triangle_mesh.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mauro/Documents/cpu-ray-tracing-engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.o -MF CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.o.d -o CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.o -c /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/triangle_mesh.cpp
 
 CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/triangle_mesh.cpp > CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/triangle_mesh.cpp > CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.i
 
 CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/triangle_mesh.cpp -o CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/triangle_mesh.cpp -o CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.s
 
 CMakeFiles/main.dir/main.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/main.cpp.o: ../main.cpp
 CMakeFiles/main.dir/main.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mauro/Documents/computacion-grafica/tp-final/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/main.cpp.o -MF CMakeFiles/main.dir/main.cpp.o.d -o CMakeFiles/main.dir/main.cpp.o -c /home/mauro/Documents/computacion-grafica/tp-final/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mauro/Documents/cpu-ray-tracing-engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/main.cpp.o -MF CMakeFiles/main.dir/main.cpp.o.d -o CMakeFiles/main.dir/main.cpp.o -c /home/mauro/Documents/cpu-ray-tracing-engine/main.cpp
 
 CMakeFiles/main.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mauro/Documents/computacion-grafica/tp-final/main.cpp > CMakeFiles/main.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mauro/Documents/cpu-ray-tracing-engine/main.cpp > CMakeFiles/main.dir/main.cpp.i
 
 CMakeFiles/main.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mauro/Documents/computacion-grafica/tp-final/main.cpp -o CMakeFiles/main.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mauro/Documents/cpu-ray-tracing-engine/main.cpp -o CMakeFiles/main.dir/main.cpp.s
 
 # Object files for target main
 main_OBJECTS = \
@@ -125,7 +125,7 @@ main: CMakeFiles/main.dir/src/hittables/triangle_mesh.cpp.o
 main: CMakeFiles/main.dir/main.cpp.o
 main: CMakeFiles/main.dir/build.make
 main: CMakeFiles/main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/mauro/Documents/computacion-grafica/tp-final/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/mauro/Documents/cpu-ray-tracing-engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable main"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -137,6 +137,6 @@ CMakeFiles/main.dir/clean:
 .PHONY : CMakeFiles/main.dir/clean
 
 CMakeFiles/main.dir/depend:
-	cd /home/mauro/Documents/computacion-grafica/tp-final/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mauro/Documents/computacion-grafica/tp-final /home/mauro/Documents/computacion-grafica/tp-final /home/mauro/Documents/computacion-grafica/tp-final/build /home/mauro/Documents/computacion-grafica/tp-final/build /home/mauro/Documents/computacion-grafica/tp-final/build/CMakeFiles/main.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/mauro/Documents/cpu-ray-tracing-engine/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mauro/Documents/cpu-ray-tracing-engine /home/mauro/Documents/cpu-ray-tracing-engine /home/mauro/Documents/cpu-ray-tracing-engine/build /home/mauro/Documents/cpu-ray-tracing-engine/build /home/mauro/Documents/cpu-ray-tracing-engine/build/CMakeFiles/main.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/main.dir/depend
 

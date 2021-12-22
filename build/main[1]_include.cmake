@@ -1,5 +1,0 @@
-if(EXISTS "/home/mauro/Documents/computacion-grafica/tp-final/build/main[1]_tests.cmake")
-  include("/home/mauro/Documents/computacion-grafica/tp-final/build/main[1]_tests.cmake")
-else()
-  add_test(main_NOT_BUILT main_NOT_BUILT)
-endif()

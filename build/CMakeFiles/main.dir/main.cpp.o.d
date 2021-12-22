@@ -1,8 +1,8 @@
 CMakeFiles/main.dir/main.cpp.o: \
- /home/mauro/Documents/computacion-grafica/tp-final/main.cpp \
+ /home/mauro/Documents/cpu-ray-tracing-engine/main.cpp \
  /usr/include/stdc-predef.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/camera.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/vec3.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/camera.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/vec3.h \
  /usr/include/c++/11.1.0/cmath \
  /usr/include/c++/11.1.0/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/11.1.0/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -133,7 +133,7 @@ CMakeFiles/main.dir/main.cpp.o: \
  /usr/include/c++/11.1.0/bits/basic_ios.tcc \
  /usr/include/c++/11.1.0/bits/ostream.tcc /usr/include/c++/11.1.0/istream \
  /usr/include/c++/11.1.0/bits/istream.tcc \
- /home/mauro/Documents/computacion-grafica/tp-final/src/rtweekend.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/rtweekend.h \
  /usr/include/c++/11.1.0/limits /usr/include/c++/11.1.0/memory \
  /usr/include/c++/11.1.0/bits/stl_uninitialized.h \
  /usr/include/c++/11.1.0/bits/stl_tempbuf.h \
@@ -154,17 +154,17 @@ CMakeFiles/main.dir/main.cpp.o: \
  /usr/include/c++/11.1.0/bits/atomic_base.h \
  /usr/include/c++/11.1.0/bits/atomic_lockfree_defines.h \
  /usr/include/c++/11.1.0/backward/auto_ptr.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/ray.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/color.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/hittable_list.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/hittable.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/../ray.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/ray.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/color.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/hittable_list.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/hittable.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/../ray.h \
  /usr/include/c++/11.1.0/vector /usr/include/c++/11.1.0/bits/stl_vector.h \
  /usr/include/c++/11.1.0/bits/stl_bvector.h \
  /usr/include/c++/11.1.0/bits/vector.tcc \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/sphere.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/../vec3.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/material.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/sphere.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/../vec3.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/material.h \
  /usr/include/c++/11.1.0/chrono /usr/include/c++/11.1.0/ratio \
  /usr/include/c++/11.1.0/ctime \
  /usr/include/c++/11.1.0/bits/parse_numbers.h \
@@ -175,14 +175,14 @@ CMakeFiles/main.dir/main.cpp.o: \
  /usr/include/c++/11.1.0/bits/algorithmfwd.h \
  /usr/include/c++/11.1.0/bits/stl_heap.h \
  /usr/include/c++/11.1.0/bits/uniform_int_dist.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/percentage.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/vec3.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/rtweekend.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/triangle_mesh.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/box.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/square.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/triangle.h \
- /home/mauro/Documents/computacion-grafica/tp-final/src/hittables/space_divider.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/percentage.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/vec3.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/rtweekend.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/triangle_mesh.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/box.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/square.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/triangle.h \
+ /home/mauro/Documents/cpu-ray-tracing-engine/src/hittables/space_divider.h \
  /usr/include/c++/11.1.0/set /usr/include/c++/11.1.0/bits/stl_tree.h \
  /usr/include/c++/11.1.0/bits/stl_set.h \
  /usr/include/c++/11.1.0/bits/stl_multiset.h \

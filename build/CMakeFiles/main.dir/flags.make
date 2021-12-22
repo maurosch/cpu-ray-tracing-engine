@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/mauro/Documents/computacion-grafica/tp-final/src -I/home/mauro/Documents/computacion-grafica/tp-final/src/hittables
+CXX_INCLUDES = -I/home/mauro/Documents/cpu-ray-tracing-engine/src -I/home/mauro/Documents/cpu-ray-tracing-engine/src/hittables
 
 CXX_FLAGS = -g -pthread -std=gnu++11
 

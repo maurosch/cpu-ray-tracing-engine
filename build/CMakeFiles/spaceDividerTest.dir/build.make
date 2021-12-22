@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mauro/Documents/computacion-grafica/tp-final
+CMAKE_SOURCE_DIR = /home/mauro/Documents/cpu-ray-tracing-engine
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mauro/Documents/computacion-grafica/tp-final/build
+CMAKE_BINARY_DIR = /home/mauro/Documents/cpu-ray-tracing-engine/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/spaceDividerTest.dir/depend.make
@@ -72,16 +72,16 @@ include CMakeFiles/spaceDividerTest.dir/flags.make
 CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.o: CMakeFiles/spaceDividerTest.dir/flags.make
 CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.o: ../tests/spaceDividerTest.cpp
 CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.o: CMakeFiles/spaceDividerTest.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mauro/Documents/computacion-grafica/tp-final/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.o -MF CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.o.d -o CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.o -c /home/mauro/Documents/computacion-grafica/tp-final/tests/spaceDividerTest.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mauro/Documents/cpu-ray-tracing-engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.o -MF CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.o.d -o CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.o -c /home/mauro/Documents/cpu-ray-tracing-engine/tests/spaceDividerTest.cpp
 
 CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mauro/Documents/computacion-grafica/tp-final/tests/spaceDividerTest.cpp > CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mauro/Documents/cpu-ray-tracing-engine/tests/spaceDividerTest.cpp > CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.i
 
 CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mauro/Documents/computacion-grafica/tp-final/tests/spaceDividerTest.cpp -o CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mauro/Documents/cpu-ray-tracing-engine/tests/spaceDividerTest.cpp -o CMakeFiles/spaceDividerTest.dir/tests/spaceDividerTest.cpp.s
 
 # Object files for target spaceDividerTest
 spaceDividerTest_OBJECTS = \
@@ -96,9 +96,9 @@ spaceDividerTest: libmain_lib.a
 spaceDividerTest: lib/libgtest_maind.a
 spaceDividerTest: lib/libgtestd.a
 spaceDividerTest: CMakeFiles/spaceDividerTest.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/mauro/Documents/computacion-grafica/tp-final/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable spaceDividerTest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/mauro/Documents/cpu-ray-tracing-engine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable spaceDividerTest"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/spaceDividerTest.dir/link.txt --verbose=$(VERBOSE)
-	/usr/bin/cmake -D TEST_TARGET=spaceDividerTest -D TEST_EXECUTABLE=/home/mauro/Documents/computacion-grafica/tp-final/build/spaceDividerTest -D TEST_EXECUTOR= -D TEST_WORKING_DIR=/home/mauro/Documents/computacion-grafica/tp-final/build -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=spaceDividerTest_TESTS -D CTEST_FILE=/home/mauro/Documents/computacion-grafica/tp-final/build/spaceDividerTest[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_XML_OUTPUT_DIR= -P /usr/share/cmake-3.21/Modules/GoogleTestAddTests.cmake
+	/usr/bin/cmake -D TEST_TARGET=spaceDividerTest -D TEST_EXECUTABLE=/home/mauro/Documents/cpu-ray-tracing-engine/build/spaceDividerTest -D TEST_EXECUTOR= -D TEST_WORKING_DIR=/home/mauro/Documents/cpu-ray-tracing-engine/build -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=spaceDividerTest_TESTS -D CTEST_FILE=/home/mauro/Documents/cpu-ray-tracing-engine/build/spaceDividerTest[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_XML_OUTPUT_DIR= -P /usr/share/cmake-3.21/Modules/GoogleTestAddTests.cmake
 
 # Rule to build all files generated by this target.
 CMakeFiles/spaceDividerTest.dir/build: spaceDividerTest
@@ -109,6 +109,6 @@ CMakeFiles/spaceDividerTest.dir/clean:
 .PHONY : CMakeFiles/spaceDividerTest.dir/clean
 
 CMakeFiles/spaceDividerTest.dir/depend:
-	cd /home/mauro/Documents/computacion-grafica/tp-final/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mauro/Documents/computacion-grafica/tp-final /home/mauro/Documents/computacion-grafica/tp-final /home/mauro/Documents/computacion-grafica/tp-final/build /home/mauro/Documents/computacion-grafica/tp-final/build /home/mauro/Documents/computacion-grafica/tp-final/build/CMakeFiles/spaceDividerTest.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/mauro/Documents/cpu-ray-tracing-engine/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mauro/Documents/cpu-ray-tracing-engine /home/mauro/Documents/cpu-ray-tracing-engine /home/mauro/Documents/cpu-ray-tracing-engine/build /home/mauro/Documents/cpu-ray-tracing-engine/build /home/mauro/Documents/cpu-ray-tracing-engine/build/CMakeFiles/spaceDividerTest.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/spaceDividerTest.dir/depend
 
