@@ -1,3 +1,4 @@
 # Informe
 
-Me encontré muy dificil agregar una malla de triángulos sin utilizar alguna manera para dividir el espacio en cajas para optimizar la velocidad.
+Nos encontramos muy dificil agregar una malla de triángulos sin utilizar alguna manera para dividir el espacio en cajas para optimizar la velocidad. Ya el modelo de among us tiene 3412 tríangulos. 
+Al principio tratamos de crearla manualmente mediante cajas dado 2 puntos. Las cajas se formaban mediante 6 caras, donde cada cara se formaba mediante 2 triángulos. Luego vimos la implementación del libro de Shirley y por la simpleza decidimos quedarnos con su implementación que utiliza Axis-Aligned bounding boxes las cuales son simples de implementar la intersección con los rayos y rápida (comparado a los 12 tríangulos de la caja).

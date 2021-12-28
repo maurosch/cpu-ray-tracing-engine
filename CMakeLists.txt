@@ -4,9 +4,10 @@ project(my_project)
 # GoogleTest requires at least C++11
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(main
+add_executable(
+  main
   src/main.cpp
-  src/hittables/space_divider.cpp
+  src/hittables/bvh.cpp
   src/hittables/triangle_mesh.cpp
 )
 
@@ -28,8 +29,6 @@ enable_testing()
 
 add_executable(
   spaceDividerTest
-  tests/spaceDividerTest.cpp
-  src/hittables/space_divider.cpp
   src/hittables/triangle_mesh.cpp
 )
 

@@ -11,20 +11,19 @@ using std::make_shared;
 class HittableList {
     public:
         HittableList() {}
-        HittableList(shared_ptr<HittableMaterial> object) { add(object); }
+        HittableList(shared_ptr<Hittable> object) { add(object); }
 
         void clear() { objects.clear(); }
-        void add(shared_ptr<HittableMaterial> object) { objects.push_back(object); }
+        void add(shared_ptr<Hittable> object) { objects.push_back(object); }
 
         bool hit(
-            const ray& r, double t_min, double t_max, HitRecordMaterial& rec) const;
+            const ray& r, double t_min, double t_max, HitRecord& rec) const;
 
-    public:
-        std::vector<shared_ptr<HittableMaterial>> objects;
+        std::vector<shared_ptr<Hittable>> objects;
 };
 
-bool HittableList::hit(const ray& ray, double t_min, double t_max, HitRecordMaterial& rec) const {
-    HitRecordMaterial temp_rec;
+inline bool HittableList::hit(const ray& ray, double t_min, double t_max, HitRecord& rec) const {
+    HitRecord temp_rec;
     bool hit_anything = false;
     auto closest_so_far = t_max;
 

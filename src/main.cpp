@@ -21,7 +21,7 @@ using namespace std;
 
 
 color ray_color(const ray& r, const HittableList& world, int depth) {
-    HitRecordMaterial rec;
+    HitRecord rec;
 
     // If we've exceeded the ray bounce limit, no more light is gathered.
     if (depth <= 0)
@@ -30,7 +30,8 @@ color ray_color(const ray& r, const HittableList& world, int depth) {
     if (world.hit(r, 0.001, infinity, rec)) {
         ray scattered;
         color attenuation;
-        if (rec.mat_ptr->scatter(r, rec, attenuation, scattered))
+        //if (rec.mat_ptr->scatter(r, rec, attenuation, scattered))
+        if (metal(color(0.7, 0.6, 0.5), 0.0).scatter(r, rec, attenuation, scattered))
             return attenuation * ray_color(scattered, world, depth-1);
         return color(0,0,0);
     }
@@ -45,7 +46,7 @@ HittableList random_scene() {
     HittableList world;
 
     auto ground_material = make_shared<lambertian>(color(0.5, 0.5, 0.5));
-    // world.add(make_shared<HittableMaterial>(make_shared<sphere>(point3(0,-1000,0), 1000), ground_material));
+    // world.add(make_shared<Hittable>(make_shared<sphere>(point3(0,-1000,0), 1000), ground_material));
 
     /*for (int a = -11; a < 11; a++) {
         for (int b = -11; b < 11; b++) {
@@ -86,22 +87,22 @@ HittableList random_scene() {
     
     auto metalMaterial = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
     //point3(-4,1,0), point3(4,3,0), point3(0,1,2)
-    //world.add(make_shared<HittableMaterial>(make_shared<Box>(point3(30,30,30), point3(0,0,0)), make_shared<lambertian>(color(0.4, 0.2, 0.1))));
-    world.add(make_shared<HittableMaterial>(make_shared<TriangleMesh>(point3(0,0,0), "models/among us.obj"), material2));
-    // world.add(make_shared<HittableMaterial>(make_shared<sphere>(point3(0,50,0), 10), material2));
-    // world.add(make_shared<HittableMaterial>(make_shared<sphere>(point3(50,0,0), 20), material2));
-    // world.add(make_shared<HittableMaterial>(make_shared<sphere>(point3(0,0,50), 30), material2));
-    // world.add(make_shared<HittableMaterial>(make_shared<sphere>(point3(00,0,0), 40), material2));
-    // world.add(make_shared<HittableMaterial>(make_shared<Box>(point3(0,0,0), point3(50,50,50)), material2));
+    //world.add(make_shared<Hittable>(make_shared<Box>(point3(30,30,30), point3(0,0,0)), make_shared<lambertian>(color(0.4, 0.2, 0.1))));
+    world.add(make_shared<TriangleMesh>(point3(0,0,0), "models/among us.obj", material2));
+    // world.add(make_shared<Hittable>(make_shared<sphere>(point3(0,50,0), 10), material2));
+    // world.add(make_shared<Hittable>(make_shared<sphere>(point3(50,0,0), 20), material2));
+    // world.add(make_shared<Hittable>(make_shared<sphere>(point3(0,0,50), 30), material2));
+    // world.add(make_shared<Hittable>(make_shared<sphere>(point3(00,0,0), 40), material2));
+    // world.add(make_shared<Hittable>(make_shared<Box>(point3(0,0,0), point3(50,50,50)), material2));
 
 
 
 
-    // world.add(make_shared<HittableMaterial>(make_shared<Box>(point3(0,0,0), point3(50,50,50)), material2));
+    // world.add(make_shared<Hittable>(make_shared<Box>(point3(0,0,0), point3(50,50,50)), material2));
 
-    // world.add(make_shared<HittableMaterial>(make_shared<sphere>(point3(0,0,0), 5), metalMaterial));
-    // world.add(make_shared<HittableMaterial>(make_shared<sphere>(point3(30,0,0), 5), metalMaterial));
-    // world.add(make_shared<HittableMaterial>(make_shared<sphere>(point3(0,30,0), 5), metalMaterial));
+    // world.add(make_shared<Hittable>(make_shared<sphere>(point3(0,0,0), 5), metalMaterial));
+    // world.add(make_shared<Hittable>(make_shared<sphere>(point3(30,0,0), 5), metalMaterial));
+    // world.add(make_shared<Hittable>(make_shared<sphere>(point3(0,30,0), 5), metalMaterial));
 
     
     return world;

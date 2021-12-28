@@ -12,7 +12,7 @@ class Box : public Hittable {
     public:
         
         Box(point3 firstCorner, point3 secondCorner) 
-            : firstCorner(firstCorner), secondCorner(secondCorner) {
+            : firstCorner(firstCorner), secondCorner(secondCorner){
 
             //   a  +--------+ b
             //     /|       /|
@@ -79,6 +79,11 @@ class Box : public Hittable {
                 Box(point3(middleX, b[1], b[2]), point3(b[0], middleY, middleZ)), 
                 Box(point3(a[0], middleY, middleZ), point3(middleX, g[1], g[2]))
             };
+        }
+
+        bool bounding_box(double time0, double time1, AABB& output_box) const {
+            output_box = AABB(firstCorner, secondCorner);
+            return true;
         }
 
     private:

@@ -4,7 +4,9 @@
 #include "hittable.h"
 #include "../vec3.h"
 #include "box.h"
-#include "space_divider.h"
+#include "material.h"
+#include "bvh.h"
+
 
 
 using namespace std;
@@ -12,7 +14,7 @@ using namespace std;
 class TriangleMesh : public Hittable
 {
     public:
-        TriangleMesh(point3 origin, string fileName);
+        TriangleMesh(point3 origin, string fileName, shared_ptr<Material> material);
         virtual bool hit(
             const ray& r, double t_min, double t_max, HitRecord& rec) const override;
         int amountTriangles(){return face.size();};
@@ -24,14 +26,14 @@ class TriangleMesh : public Hittable
         vector<vector<int>> tfac;	// indices de coordenadas de textura por cara
         vector<Direction> norm;	// normales
         vector<vector<int>> nfac;	// indices de normales por cara
-        vector<Triangle> innerTriangles;
-        Box boundingBox;
+        vector<shared_ptr<Hittable>> innerTriangles;
 
+        shared_ptr<BvhNode> hierarchy;
+    
         // Abrimos el obj
         void load( point3 origin, string fileName );
         
-        // Computa y retorna el bounding box del objeto
-        Box getBoundingBox();
+        bool bounding_box(double time0, double time1, AABB& output_box) const;
         
         // Desplazar y escalar
         /*void shiftAndScale( shift, scale );

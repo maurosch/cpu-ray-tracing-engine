@@ -18,6 +18,15 @@ class Square : public Hittable {
             return firstTriangle.hit(r, t_min, t_max, rec) || secondTriangle.hit(r, t_min, t_max, rec);
         };
 
+        bool bounding_box(double time0, double time1, AABB& output_box) const {
+            AABB a, b;
+            firstTriangle.bounding_box(0,0, a);
+            secondTriangle.bounding_box(0,0, b);
+            output_box = surrounding_box(a, b);
+                
+            return true;
+        }
+
     private:
         Triangle firstTriangle;
         Triangle secondTriangle;

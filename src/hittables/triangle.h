@@ -47,6 +47,22 @@ class Triangle : public Hittable {
             return false;
         };
 
+        bool bounding_box(double time0, double time1, AABB& output_box) const {
+            output_box = AABB(
+                point3(
+                    min(min(firstPoint[0], secondPoint[0]), thirdPoint[0]),
+                    min(min(firstPoint[1], secondPoint[1]), thirdPoint[1]),
+                    min(min(firstPoint[2], secondPoint[2]), thirdPoint[2])
+                ),
+
+                point3(
+                    max(max(firstPoint[0], secondPoint[0]), thirdPoint[0]),
+                    max(max(firstPoint[1], secondPoint[1]), thirdPoint[1]),
+                    max(max(firstPoint[2], secondPoint[2]), thirdPoint[2])
+                ));
+            return true;
+        }
+
     private:
         point3 firstPoint;
         point3 secondPoint;

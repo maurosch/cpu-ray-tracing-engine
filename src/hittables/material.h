@@ -3,14 +3,14 @@
 
 struct HitRecord;
 
-class material {
+class Material {
     public:
         virtual bool scatter(
             const ray& r_in, const HitRecord& rec, color& attenuation, ray& scattered
         ) const = 0;
 };
 
-class lambertian : public material {
+class lambertian : public Material {
     public:
         lambertian(const color& a) : albedo(a) {}
 
@@ -33,7 +33,7 @@ class lambertian : public material {
         color albedo;
 };
 
-class metal : public material {
+class metal : public Material {
     public:
         metal(const color& a, double f) : albedo(a), fuzz(f < 1 ? f : 1) {}
         metal(const color& a) : albedo(a) {}
@@ -52,7 +52,7 @@ class metal : public material {
         double fuzz;
 };
 
-class dielectric : public material {
+class dielectric : public Material {
     public:
         dielectric(double index_of_refraction) : ir(index_of_refraction) {}
 

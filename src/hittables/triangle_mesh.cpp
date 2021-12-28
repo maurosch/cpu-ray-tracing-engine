@@ -5,14 +5,18 @@
 #include <vector>
 #include <regex>
 #include <string>
+#include "material.h"
+
 
 using namespace std;
 
-TriangleMesh::TriangleMesh(point3 origin, string fileName)
-    : boundingBox(Box(point3(0,0,0), point3(0,0,0))) {
+TriangleMesh::TriangleMesh(point3 origin, string fileName, shared_ptr<Material> _material)
+    : Hittable(_material) {
     
     load(origin, fileName);
-    boundingBox = getBoundingBox();
+    hierarchy = make_shared<BvhNode>(
+        innerTriangles, 0, 0
+    );
 }
 
 std::vector<std::string> split(const string& input, const string& regex) {
@@ -92,16 +96,18 @@ void TriangleMesh::load(point3 origin, string fileName)
                 auto firstPoint = vpos[f[0]];
                 auto secondPoint = vpos[f[j-1]];
                 auto thirdPoint = vpos[f[j]];
-                innerTriangles.push_back(Triangle(firstPoint+origin, secondPoint+origin, thirdPoint+origin));
+                innerTriangles.push_back(make_shared<Triangle>(firstPoint+origin, secondPoint+origin, thirdPoint+origin));
 			} 
         }
     }
 }
 
 // Computa y retorna el bounding box del objeto
-Box TriangleMesh::getBoundingBox()
-{
-    if ( vpos.size() == 0 ) return Box(point3(0,0,0), point3(0,0,0));
+bool TriangleMesh::bounding_box(double time0, double time1, AABB& output_box) const {
+    if ( vpos.size() == 0 ) {
+        output_box = AABB(point3(0,0,0), point3(0,0,0));
+        return true;
+    }
     point3 min = vpos[0];
     point3 max = vpos[0];
     for ( int i = 1; i < vpos.size(); i++ ) 
@@ -112,22 +118,12 @@ Box TriangleMesh::getBoundingBox()
             if ( max[j] < vpos[i][j] ) max[j] = vpos[i][j];
         }
     }
-    return Box(min, max);
+    output_box = AABB(min, max);
+    return true;
 }
 
 bool TriangleMesh::hit(const ray& r, double t_min, double t_max, HitRecord& rec) const {
-    HitRecord recordHitTriangle;
-    rec.t = t_max;
-    bool hasHitted = false;
-    //if(boundingBox.hit(r, t_min, t_max, rec)){
-    for(int i = 0; i < innerTriangles.size(); i++){
-        if(innerTriangles[i].hit(r, t_min, t_max, recordHitTriangle) && recordHitTriangle.t < rec.t){
-            hasHitted = true;
-            rec = recordHitTriangle;
-        }
-    }
-    //}
-    return hasHitted;
+    return hierarchy->hit(r, t_min, t_max, rec);
 }
 
 // Desplazar y escalar
