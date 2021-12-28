@@ -1,6 +1,5 @@
 #include "camera.h"
 #include "color.h"
-#include "hittables/hittable_list.h"
 #include "hittables/sphere.h"
 #include "hittables/material.h"
 #include <chrono>
@@ -14,13 +13,14 @@
 #include "percentage.h"
 #include "vec3.h"
 #include "rtweekend.h"
+#include "image_writer.h"
 #include "hittables/triangle_mesh.h"
 #include <fstream>
 
 using namespace std;
 
 
-color ray_color(const ray& r, const HittableList& world, int depth) {
+color ray_color(const ray& r, const BvhNode& world, int depth) {
     HitRecord rec;
 
     // If we've exceeded the ray bounce limit, no more light is gathered.
@@ -30,8 +30,7 @@ color ray_color(const ray& r, const HittableList& world, int depth) {
     if (world.hit(r, 0.001, infinity, rec)) {
         ray scattered;
         color attenuation;
-        //if (rec.mat_ptr->scatter(r, rec, attenuation, scattered))
-        if (metal(color(0.7, 0.6, 0.5), 0.0).scatter(r, rec, attenuation, scattered))
+        if (rec.mat_ptr->scatter(r, rec, attenuation, scattered))
             return attenuation * ray_color(scattered, world, depth-1);
         return color(0,0,0);
     }
@@ -41,71 +40,17 @@ color ray_color(const ray& r, const HittableList& world, int depth) {
     return (1.0-t)*color(1.0, 1.0, 1.0) + t*color(0.5, 0.7, 1.0);
 }
 
-HittableList random_scene() {
-    cerr << "LOADING ASSETS..." << endl;
-    HittableList world;
+BvhNode random_scene() {
+    cout << "LOADING ASSETS..." << endl;
+    vector<shared_ptr<Hittable>> world;
 
-    auto ground_material = make_shared<lambertian>(color(0.5, 0.5, 0.5));
-    // world.add(make_shared<Hittable>(make_shared<sphere>(point3(0,-1000,0), 1000), ground_material));
-
-    /*for (int a = -11; a < 11; a++) {
-        for (int b = -11; b < 11; b++) {
-            auto choose_mat = random_double();
-            point3 center(a + 0.9*random_double(), 0.2, b + 0.9*random_double());
-
-            if ((center - point3(4, 0.2, 0)).length() > 0.9) {
-                shared_ptr<material> sphere_material;
-
-                if (choose_mat < 0.8) {
-                    // diffuse
-                    auto albedo = color::random() * color::random();
-                    sphere_material = make_shared<lambertian>(albedo);
-                    world.add(make_shared<sphere>(center, 0.2, sphere_material));
-                } else if (choose_mat < 0.95) {
-                    // metal
-                    auto albedo = color::random(0.5, 1);
-                    auto fuzz = random_double(0, 0.5);
-                    sphere_material = make_shared<metal>(albedo, fuzz);
-                    world.add(make_shared<sphere>(center, 0.2, sphere_material));
-                } else {
-                    // glass
-                    sphere_material = make_shared<dielectric>(1.5);
-                    world.add(make_shared<sphere>(center, 0.2, sphere_material));
-                }
-            }
-        }
-    }
-
-    world.add(make_shared<sphere>(point3(0, 1, 0), 1.0, material1));
-
-    world.add(make_shared<sphere>(point3(-4, 1, 0), 1.0, material2));
-
-    auto material3 = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
-    world.add(make_shared<sphere>(point3(4, 1, 0), 1.0, material3));*/
-    auto material2 = make_shared<lambertian>(color(0.4, 0.2, 0.1));
-    auto material1 = make_shared<dielectric>(1.5);
+    auto ground_material = make_shared<Lambertian>(color(0.5, 0.5, 0.5));
+    world.push_back(make_shared<HittableMaterial>(make_shared<sphere>(point3(0,-1000,0), 1000), ground_material));
     
-    auto metalMaterial = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
-    //point3(-4,1,0), point3(4,3,0), point3(0,1,2)
-    //world.add(make_shared<Hittable>(make_shared<Box>(point3(30,30,30), point3(0,0,0)), make_shared<lambertian>(color(0.4, 0.2, 0.1))));
-    world.add(make_shared<TriangleMesh>(point3(0,0,0), "models/among us.obj", material2));
-    // world.add(make_shared<Hittable>(make_shared<sphere>(point3(0,50,0), 10), material2));
-    // world.add(make_shared<Hittable>(make_shared<sphere>(point3(50,0,0), 20), material2));
-    // world.add(make_shared<Hittable>(make_shared<sphere>(point3(0,0,50), 30), material2));
-    // world.add(make_shared<Hittable>(make_shared<sphere>(point3(00,0,0), 40), material2));
-    // world.add(make_shared<Hittable>(make_shared<Box>(point3(0,0,0), point3(50,50,50)), material2));
-
-
-
-
-    // world.add(make_shared<Hittable>(make_shared<Box>(point3(0,0,0), point3(50,50,50)), material2));
-
-    // world.add(make_shared<Hittable>(make_shared<sphere>(point3(0,0,0), 5), metalMaterial));
-    // world.add(make_shared<Hittable>(make_shared<sphere>(point3(30,0,0), 5), metalMaterial));
-    // world.add(make_shared<Hittable>(make_shared<sphere>(point3(0,30,0), 5), metalMaterial));
-
+    auto metalMaterial = make_shared<Metal>(color(0.7, 0.6, 0.5), 0.0);
+    world.push_back(make_shared<HittableMaterial>(make_shared<TriangleMesh>(point3(0,0,0), "models/among us.obj"), metalMaterial));
     
-    return world;
+    return BvhNode(world, 0,0);
 }
 
 int main() {
@@ -127,10 +72,10 @@ int main() {
     camera cam(lookfrom, lookat, vup, 20, aspect_ratio, aperture, dist_to_focus);
 
     // Render
-    cerr << "SAMPLES PER PIXEL: " << samples_per_pixel << endl;
-    cerr << "RAY DEPTH: " << max_depth << endl;
-    cerr << "RENDER DIMENSION: " << image_width << "x" << image_height << endl;
-    vector<vector<vec3>> finalImage = vector<vector<vec3>>(image_height, vector<vec3>(image_width));
+    cout << "SAMPLES PER PIXEL: " << samples_per_pixel << endl;
+    cout << "RAY DEPTH: " << max_depth << endl;
+    cout << "RENDER DIMENSION: " << image_width << "x" << image_height << endl;
+    auto finalImage = make_shared<vector<vector<vec3>>>(image_height, vector<vec3>(image_width));
 
     #ifdef DO_NOT_USE_THREADS
         auto percentageIndicator = PercentageIndicator();
@@ -145,13 +90,13 @@ int main() {
                     ray r = cam.get_ray(u, v);
                     pixel_color += ray_color(r, world, max_depth);
                 }
-                finalImage[j][i] = write_color(pixel_color, samples_per_pixel);
+                (*finalImage)[j][i] = write_color(pixel_color, samples_per_pixel);
             }
         }     
     #else   
         auto processor_count = thread::hardware_concurrency();
         if(processor_count == 0) processor_count = 1;
-        cerr << "AMOUNT CORES: " << processor_count << endl;
+        cout << "AMOUNT CORES: " << processor_count << endl;
 
         bool finished = false;
         MulticorePercentageIndicator percentageIndicator = MulticorePercentageIndicator(processor_count);
@@ -172,7 +117,7 @@ int main() {
                             ray r = cam.get_ray(u, v);
                             pixel_color += ray_color(r, world, max_depth);
                         }
-                        finalImage[j][i] = write_color(pixel_color, samples_per_pixel);
+                        (*finalImage)[j][i] = write_color(pixel_color, samples_per_pixel);
                     }
                 }
                 percentageIndicator.update(numberProcessor, 1);
@@ -184,16 +129,7 @@ int main() {
         percentageIndicator.stopPrinting();
     #endif
 
-    ofstream fout("img.ppm");
-    fout << "P3\n" << image_width << " " << image_height << "\n255\n";
-    for (int j = image_height-1; j >= 0; --j) {
-        for (int i = 0; i < image_width; ++i) {
-            fout << static_cast<int>(256 * finalImage[j][i][0]) << ' '
-                << static_cast<int>(256 * finalImage[j][i][1]) << ' '
-                << static_cast<int>(256 * finalImage[j][i][2]) << '\n';
-        }
-    }
-    fout.close();
+    PPMWriter("img.ppm", finalImage).print();
 
-    cerr << "\nDone.\n";
+    cout << "\nDone.\n";
 }

@@ -10,9 +10,7 @@
 
 using namespace std;
 
-TriangleMesh::TriangleMesh(point3 origin, string fileName, shared_ptr<Material> _material)
-    : Hittable(_material) {
-    
+TriangleMesh::TriangleMesh(point3 origin, string fileName) {
     load(origin, fileName);
     hierarchy = make_shared<BvhNode>(
         innerTriangles, 0, 0

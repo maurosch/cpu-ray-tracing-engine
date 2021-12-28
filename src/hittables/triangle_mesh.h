@@ -14,7 +14,7 @@ using namespace std;
 class TriangleMesh : public Hittable
 {
     public:
-        TriangleMesh(point3 origin, string fileName, shared_ptr<Material> material);
+        TriangleMesh(point3 origin, string fileName);
         virtual bool hit(
             const ray& r, double t_min, double t_max, HitRecord& rec) const override;
         int amountTriangles(){return face.size();};

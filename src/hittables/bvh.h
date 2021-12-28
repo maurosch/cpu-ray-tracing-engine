@@ -3,9 +3,9 @@
 
 #include "../rtweekend.h"
 #include "hittable.h"
-#include "hittable_list.h"
 #include "aabb.h"
 #include <algorithm>
+#include <vector>
 using namespace std;
 
 // Bounding Volume Hierarchy

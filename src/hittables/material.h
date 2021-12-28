@@ -10,9 +10,9 @@ class Material {
         ) const = 0;
 };
 
-class lambertian : public Material {
+class Lambertian : public Material {
     public:
-        lambertian(const color& a) : albedo(a) {}
+        Lambertian(const color& a) : albedo(a) {}
 
         virtual bool scatter(
             const ray& r_in, const HitRecord& rec, color& attenuation, ray& scattered
@@ -33,10 +33,10 @@ class lambertian : public Material {
         color albedo;
 };
 
-class metal : public Material {
+class Metal : public Material {
     public:
-        metal(const color& a, double f) : albedo(a), fuzz(f < 1 ? f : 1) {}
-        metal(const color& a) : albedo(a) {}
+        Metal(const color& a, double f) : albedo(a), fuzz(f < 1 ? f : 1) {}
+        Metal(const color& a) : albedo(a) {}
 
         virtual bool scatter(
             const ray& r_in, const HitRecord& rec, color& attenuation, ray& scattered
@@ -52,9 +52,9 @@ class metal : public Material {
         double fuzz;
 };
 
-class dielectric : public Material {
+class Dielectric : public Material {
     public:
-        dielectric(double index_of_refraction) : ir(index_of_refraction) {}
+        Dielectric(double index_of_refraction) : ir(index_of_refraction) {}
 
         virtual bool scatter(
             const ray& r_in, const HitRecord& rec, color& attenuation, ray& scattered
