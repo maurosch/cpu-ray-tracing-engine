@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-vec3 write_color(color pixel_color, int samples_per_pixel) {
+inline vec3 write_color(color pixel_color, int samples_per_pixel) {
     auto r = pixel_color.x();
     auto g = pixel_color.y();
     auto b = pixel_color.z();

@@ -9,6 +9,7 @@ add_executable(
   src/main.cpp
   src/hittables/bvh.cpp
   src/hittables/triangle_mesh.cpp
+  src/engine.cpp
 )
 
 include(FetchContent)

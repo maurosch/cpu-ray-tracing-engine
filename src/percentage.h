@@ -3,8 +3,10 @@
 #include <chrono>
 #include <vector>
 #include <atomic> 
+#include <thread> 
+using namespace std;
 
-std::string printTime(int seconds){
+inline std::string printTime(int seconds){
     if(seconds > 60){
         int minutes = seconds/60;
         return std::to_string(minutes)+" min "+std::to_string(seconds - minutes*60)+" seconds";
