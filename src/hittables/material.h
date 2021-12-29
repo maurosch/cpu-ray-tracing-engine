@@ -1,6 +1,8 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
+#include "texture.h"
+
 struct HitRecord;
 
 class Material {
@@ -8,6 +10,9 @@ class Material {
         virtual bool scatter(
             const ray& r_in, const HitRecord& rec, color& attenuation, ray& scattered
         ) const = 0;
+        virtual color emitted(double u, double v, const point3& p) const {
+            return color(0,0,0);
+        }
 };
 
 class Lambertian : public Material {
@@ -87,6 +92,25 @@ class Dielectric : public Material {
             r0 = r0*r0;
             return r0 + (1-r0)*pow((1 - cosine),5);
         }
+};
+
+class DiffuseLight : public Material  {
+    public:
+        DiffuseLight(shared_ptr<Texture> a) : emit(a) {}
+        DiffuseLight(color c) : emit(make_shared<SolidColor>(c)) {}
+
+        virtual bool scatter(
+            const ray& r_in, const HitRecord& rec, color& attenuation, ray& scattered
+        ) const override {
+            return false;
+        }
+
+        virtual color emitted(double u, double v, const point3& p) const override {
+            return emit->value(u, v, p);
+        }
+
+    public:
+        shared_ptr<Texture> emit;
 };
 
 #endif

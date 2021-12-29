@@ -94,7 +94,13 @@ void TriangleMesh::load(point3 origin, string fileName)
                 auto firstPoint = vpos[f[0]];
                 auto secondPoint = vpos[f[j-1]];
                 auto thirdPoint = vpos[f[j]];
-                innerTriangles.push_back(make_shared<Triangle>(firstPoint+origin, secondPoint+origin, thirdPoint+origin));
+                innerTriangles.push_back(
+                    make_shared<Triangle>(
+                        firstPoint+origin, 
+                        secondPoint+origin, 
+                        thirdPoint+origin, 
+                        norm[nf[j-2]]
+                    ));
 			} 
         }
     }

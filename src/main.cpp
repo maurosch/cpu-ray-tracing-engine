@@ -27,17 +27,18 @@ color ray_color(const ray& r, const BvhNode& world, int depth) {
     if (depth <= 0)
         return color(0,0,0);
 
-    if (world.hit(r, 0.001, infinity, rec)) {
-        ray scattered;
-        color attenuation;
-        if (rec.mat_ptr->scatter(r, rec, attenuation, scattered))
-            return attenuation * ray_color(scattered, world, depth-1);
-        return color(0,0,0);
-    }
+    // If the ray hits nothing, return the background color.
+    if (!world.hit(r, 0.001, infinity, rec))
+        return color(0,0.1,0);
 
-    vec3 unit_direction = unit_vector(r.direction());
-    auto t = 0.5*(unit_direction.y() + 1.0);
-    return (1.0-t)*color(1.0, 1.0, 1.0) + t*color(0.5, 0.7, 1.0);
+    ray scattered;
+    color attenuation;
+    color emitted = rec.mat_ptr->emitted(rec.u, rec.v, rec.p);
+
+    if (!rec.mat_ptr->scatter(r, rec, attenuation, scattered))
+        return emitted;
+
+    return emitted + attenuation * ray_color(scattered, world, depth-1);
 }
 
 BvhNode random_scene() {
@@ -45,27 +46,41 @@ BvhNode random_scene() {
     vector<shared_ptr<Hittable>> world;
 
     auto ground_material = make_shared<Lambertian>(color(0.5, 0.5, 0.5));
-    world.push_back(make_shared<HittableMaterial>(make_shared<sphere>(point3(0,-1000,0), 1000), ground_material));
-    
     auto metalMaterial = make_shared<Metal>(color(0.7, 0.6, 0.5), 0.0);
-    world.push_back(make_shared<HittableMaterial>(make_shared<TriangleMesh>(point3(0,0,0), "models/among us.obj"), metalMaterial));
+    auto light = make_shared<DiffuseLight>(color(4, 4, 4));
+    auto lambertian = make_shared<Lambertian>(color(1, 0, 0));
+
+
+    world.push_back(make_shared<HittableMaterial>(make_shared<Sphere>(point3(0,-1000,0), 1000), ground_material));
+    world.push_back(make_shared<HittableMaterial>(make_shared<Sphere>(point3(200,200,50), 20), lambertian));    
+    
+    world.push_back(make_shared<HittableMaterial>(make_shared<Triangle>(point3(0,100,50), point3(0,0,0), point3(100,100,50)), light));    
+    world.push_back(make_shared<HittableMaterial>(make_shared<TriangleMesh>(point3(-100,0,0), "models/among us.obj"), lambertian));
+
+    //world.push_back(make_shared<HittableMaterial>(make_shared<Sphere>(point3(250,10,2), 1), light));
     
     return BvhNode(world, 0,0);
 }
 
 int main() {
-    const auto aspect_ratio = 3.0 / 2.0;
+    /*const auto aspect_ratio = 3.0 / 2.0;
     const int image_width = 400;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    const int samples_per_pixel = 10;
-    const int max_depth = 5;
+    const int samples_per_pixel = 50;
+    const int max_depth = 20;*/
+
+    const auto aspect_ratio = 3.0 / 2.0;
+    const int image_width = 720;
+    const int image_height = static_cast<int>(image_width / aspect_ratio);
+    const int samples_per_pixel = 100;
+    const int max_depth = 20;
 
     // World
     auto world = random_scene();
     
     // Camera
     point3 lookfrom(500,500,500);
-    point3 lookat(0,0,0);
+    point3 lookat(0,100,0);
     vec3 vup(0,1,0);
     auto dist_to_focus = 10.0;
     auto aperture = 0.01;

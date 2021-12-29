@@ -6,9 +6,11 @@
 
 class Triangle : public Hittable {
     public:
-        
         Triangle(point3 firstPoint, point3 secondPoint, point3 thirdPoint) 
-            : firstPoint(firstPoint), secondPoint(secondPoint), thirdPoint(thirdPoint) {};
+            : firstPoint(firstPoint), secondPoint(secondPoint), thirdPoint(thirdPoint), 
+            normal(cross(secondPoint-firstPoint, thirdPoint-firstPoint)) {};
+        Triangle(point3 firstPoint, point3 secondPoint, point3 thirdPoint, vec3 normal) 
+            : firstPoint(firstPoint), secondPoint(secondPoint), thirdPoint(thirdPoint), normal(normal) {};
         
         virtual bool hit(const ray& r, double t_min, double t_max, HitRecord& rec) const override {
             
@@ -39,7 +41,7 @@ class Triangle : public Hittable {
             float t = f * dot(edge2,q);
             if (t > EPSILON) // ray intersection
             {
-                rec.set_face_normal(r, h);
+                rec.set_face_normal(r, normal);
                 rec.p = rayOrigin + rayVector * t;
                 return true;
             }
@@ -67,6 +69,7 @@ class Triangle : public Hittable {
         point3 firstPoint;
         point3 secondPoint;
         point3 thirdPoint;
+        vec3 normal;
 };
 
 #endif

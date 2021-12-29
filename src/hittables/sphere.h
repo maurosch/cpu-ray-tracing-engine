@@ -4,9 +4,9 @@
 #include "hittable.h"
 #include "../vec3.h"
 
-class sphere : public Hittable {
+class Sphere : public Hittable {
     public:
-        sphere(point3 cen, double r) : center(cen), radius(r) {};
+        Sphere(point3 cen, double r) : center(cen), radius(r) {};
 
         virtual bool hit(
             const ray& r, double t_min, double t_max, HitRecord& rec) const override;
@@ -23,7 +23,7 @@ class sphere : public Hittable {
         double radius;
 };
 
-bool sphere::hit(const ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool Sphere::hit(const ray& r, double t_min, double t_max, HitRecord& rec) const {
     vec3 oc = r.origin() - center;
     auto a = r.direction().length_squared();
     auto half_b = dot(oc, r.direction());
