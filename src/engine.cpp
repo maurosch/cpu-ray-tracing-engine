@@ -15,10 +15,10 @@ shared_ptr<vector<vector<vec3>>> GraphicsEngine::render(){
         auto percentageIndicator = PercentageIndicator();
         for (int j = 0; j < image_height; j++) {
             percentageIndicator.print();
-            percentageIndicator.update(j/float(image_height));
             for (int i = 0; i < image_width; ++i) {
                 (*finalImage)[j][i] = renderSinglePixel(i, j);
             }
+            percentageIndicator.update((j+1)/float(image_height));
         }
     #else
         auto processor_count = thread::hardware_concurrency();
@@ -34,13 +34,12 @@ shared_ptr<vector<vector<vec3>>> GraphicsEngine::render(){
             threads.push_back(thread([&] (int numberProcessor) {
                 int initial = image_height/processor_count*numberProcessor;
                 int ending = image_height/processor_count*(numberProcessor+1);
-                for (int j = initial; j < ending; j++) {
-                    percentageIndicator.update(numberProcessor, (j-initial)/float(ending-initial));
+                for (int j = initial; j < ending; j++) {                    
                     for (int i = 0; i < image_width; ++i) {
                         (*finalImage)[j][i] = renderSinglePixel(i, j);
                     }
+                    percentageIndicator.update(numberProcessor, (j+1-initial)/float(ending-initial));
                 }
-                percentageIndicator.update(numberProcessor, 1);
             }, p));
         }
         for(int i = 0; i < processor_count; i++){
