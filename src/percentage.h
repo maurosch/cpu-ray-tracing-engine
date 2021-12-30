@@ -3,15 +3,17 @@
 #include <chrono>
 #include <vector>
 #include <atomic> 
-#include <thread> 
+#ifndef DISABLE_THREADS
+    #include <thread> 
+#endif
 using namespace std;
 
-inline std::string printTime(int seconds){
+inline string printTime(int seconds){
     if(seconds > 60){
         int minutes = seconds/60;
-        return std::to_string(minutes)+" min "+std::to_string(seconds - minutes*60)+" seconds";
+        return to_string(minutes)+" min "+to_string(seconds - minutes*60)+" seconds";
     }
-    return std::to_string(seconds)+" seconds";
+    return to_string(seconds)+" seconds";
 }
 
 class PercentageIndicator {
@@ -19,7 +21,7 @@ class PercentageIndicator {
         PercentageIndicator(){
             _percentage = 0;
             lastPercentage = 0;
-            lastTime = std::chrono::system_clock::now();
+            lastTime = chrono::system_clock::now();
             _eta = 0;
         }
         int percentage(){
@@ -29,8 +31,8 @@ class PercentageIndicator {
             return _eta;
         }
         void update(float newPercentage){
-            auto time = std::chrono::system_clock::now();
-            std::chrono::duration<double> elapsed_seconds = time - lastTime;
+            auto time = chrono::system_clock::now();
+            chrono::duration<double> elapsed_seconds = time - lastTime;
             if(elapsed_seconds.count() > 2){
                 lastTime = time;
                 _eta = (1-newPercentage)/(newPercentage-lastPercentage)*elapsed_seconds.count();
@@ -38,35 +40,37 @@ class PercentageIndicator {
             }
             _percentage = newPercentage;
         };
-        void print(){
-            std::cerr << "\r";
-            std::cerr << "| " << int(_percentage*100) << "% | ";
-            std::cerr << "ETA: " << printTime(_eta) << std::flush;
+        void print(ostream &out){
+            out << "\r";
+            out << "| " << int(_percentage*100) << "% | ";
+            out << "ETA: " << printTime(_eta) << flush;
         };
     private:
-        std::chrono::system_clock::time_point lastTime;
+        chrono::system_clock::time_point lastTime;
         float _eta;
         float lastPercentage;
         float _percentage;
 };
 
-class MulticorePercentageIndicator {
-    std::vector<PercentageIndicator> percentages;
-    int amount_cores;
-    bool keepPrinting;
-    std::thread printerThread;
+#ifndef DISABLE_THREADS
+class MultiThreadPercentageIndicator {
+    private:
+        vector<PercentageIndicator> percentages;
+        int amountThreads;
+        bool keepPrinting;
+        thread printerThread;
 
     public:
-        MulticorePercentageIndicator(int _amount_cores){
-            percentages = std::vector<PercentageIndicator>(_amount_cores);
-            amount_cores = _amount_cores;
+        MultiThreadPercentageIndicator(int _amountThreads){
+            percentages = vector<PercentageIndicator>(_amountThreads);
+            amountThreads = _amountThreads;
         }
-        void startPrinting(){
+        void startPrinting(ostream &out){
             keepPrinting = true;
-            printerThread = std::thread([&]() {
+            printerThread = thread([&]() {
                 while(keepPrinting) {
-                    print();
-                    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+                    print(out);
+                    this_thread::sleep_for(chrono::milliseconds(1000));
                 }
             });
         }
@@ -77,15 +81,16 @@ class MulticorePercentageIndicator {
         void update(int coreNumber, float newPercentage){
             percentages[coreNumber].update(newPercentage);
         }
-        void print(){
-            std::cerr << "\r";
-            for(int p = 0; p < amount_cores; p++){
-                std::cerr << percentages[p].percentage() << "% | ";
+        void print(ostream &out){
+            out << "\r";
+            for(int p = 0; p < amountThreads; p++){
+                out << percentages[p].percentage() << "% | ";
             }
             int maxEta = 0;
-            for(int p = 0; p < amount_cores; p++){
-                maxEta = std::max(maxEta, percentages[p].eta());
+            for(int p = 0; p < amountThreads; p++){
+                maxEta = max(maxEta, percentages[p].eta());
             }
-            std::cerr << "ETA: " << printTime(maxEta) << std::flush;
+            out << "ETA: " << printTime(maxEta) << flush;
         };
 };
+#endif

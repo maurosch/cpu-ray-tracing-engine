@@ -24,6 +24,8 @@ class GraphicsEngine {
                 max_depth(max_depth) {}
         shared_ptr<vector<vector<vec3>>> render();
 
+        void printRenderInfo(ostream& out);
+
 
     private:
         shared_ptr<BvhNode> world;
@@ -35,6 +37,8 @@ class GraphicsEngine {
         
         color ray_color(const ray& r, int depth);
         color renderSinglePixel(int i, int j);
+        int getAmountThreads();
+        
 };
 
 #endif
