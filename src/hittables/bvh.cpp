@@ -2,7 +2,7 @@
 
 BvhNode::BvhNode(
     const std::vector<shared_ptr<Hittable>>& src_objects,
-    size_t start, size_t end, double time0, double time1
+    size_t start, size_t end
 ) {
     auto objects = src_objects; // Create a modifiable array of the source scene objects
 
@@ -27,21 +27,21 @@ BvhNode::BvhNode(
         std::sort(objects.begin() + start, objects.begin() + end, comparator);
 
         auto mid = start + object_span/2;
-        left = make_shared<BvhNode>(objects, start, mid, time0, time1);
-        right = make_shared<BvhNode>(objects, mid, end, time0, time1);
+        left = make_shared<BvhNode>(objects, start, mid);
+        right = make_shared<BvhNode>(objects, mid, end);
     }
 
     AABB box_left, box_right;
 
-    if (  !left->bounding_box (time0, time1, box_left)
-       || !right->bounding_box(time0, time1, box_right)
+    if (  !left->bounding_box(box_left)
+       || !right->bounding_box(box_right)
     )
         std::cerr << "No bounding box in bvh_node constructor.\n";
 
     box = surrounding_box(box_left, box_right);
 }
 
-bool BvhNode::bounding_box(double time0, double time1, AABB& output_box) const {
+bool BvhNode::bounding_box(AABB& output_box) const {
     output_box = box;
     return true;
 }

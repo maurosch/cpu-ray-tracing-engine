@@ -10,6 +10,7 @@ add_executable(
   src/hittables/bvh.cpp
   src/hittables/triangle_mesh.cpp
   src/engine.cpp
+  src/json/minijson_reader.hpp
 )
 
 include(FetchContent)

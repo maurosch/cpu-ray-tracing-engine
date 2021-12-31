@@ -11,7 +11,7 @@ class Sphere : public Hittable {
         virtual bool hit(
             const ray& r, double t_min, double t_max, HitRecord& rec) const override;
 
-        bool bounding_box(double time0, double time1, AABB& output_box) const {
+        bool bounding_box(AABB& output_box) const {
             output_box = AABB(
                 center - vec3(radius, radius, radius),
                 center + vec3(radius, radius, radius));

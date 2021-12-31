@@ -49,7 +49,7 @@ class Triangle : public Hittable {
             return false;
         };
 
-        bool bounding_box(double time0, double time1, AABB& output_box) const {
+        bool bounding_box(AABB& output_box) const {
             output_box = AABB(
                 point3(
                     min(min(firstPoint[0], secondPoint[0]), thirdPoint[0]),

@@ -22,12 +22,12 @@ class Polygon : public Hittable {
             return false;
         };
 
-        bool bounding_box(double time0, double time1, AABB& output_box) const {
+        bool bounding_box(AABB& output_box) const {
             AABB aux;
-            triangles[0].bounding_box(0,0, output_box);
+            triangles[0].bounding_box(output_box);
 
             for(int i = 1; i < triangles.size(); i++){
-                triangles[i].bounding_box(0,0, aux);
+                triangles[i].bounding_box(aux);
                 output_box = surrounding_box(aux, output_box);
             }
             

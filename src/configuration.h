@@ -8,25 +8,66 @@
 #include "hittables/sphere.h"
 #include "hittables/triangle.h"
 #include "hittables/triangle_mesh.h"
+#include "json/minijson_reader.hpp"
+#include "json/RSJparser.tcc"
+using namespace minijson;
 
-shared_ptr<BvhNode> random_scene() {
-    cout << "LOADING ASSETS..." << endl;
-    vector<shared_ptr<Hittable>> world;
+class FileStructureMaterial {
+public:
+    string type;
+    vector<float> color;
+};
 
-    auto ground_material = make_shared<Lambertian>(color(0.5, 0.5, 0.5));
-    auto metalMaterial = make_shared<Metal>(color(0.7, 0.6, 0.5), 0.0);
-    auto light = make_shared<DiffuseLight>(color(20, 20, 20));
-    auto lambertian = make_shared<Lambertian>(color(1, 0, 0));
+class FileStructureHittable {
+public:
+    virtual shared_ptr<Hittable> toHittable(){
+        return NULL;
+    };
+    FileStructureMaterial material;
+};
+class FileStructureSphere : public FileStructureHittable {
+public:
+    shared_ptr<Hittable> toHittable() override {
+        return make_shared<Sphere>(vec3(position), radius);
+    };
+    vector<int> position;
+    int radius;
+};
+class FileStructureTriangle : public FileStructureHittable {
+public:
+    shared_ptr<Hittable> toHittable() override {
+        return make_shared<Triangle>(vec3(points[0]), vec3(points[1]), vec3(points[2]));
+    };
+    vector<vector<int>> points;
+    int radius;
+};
+class FileStructureTriangleMesh : public FileStructureHittable {
+public:
+    shared_ptr<Hittable> toHittable() override {
+        return make_shared<TriangleMesh>(vec3(position), model);
+    };
+    vector<int> position;
+    string model;
+};
+class FileStructureCamera {
+public:
+    vector<int> lookfrom;
+    vector<int> lookat;
+    vector<int> vup;
+    float dist_to_focus;
+    float aperture;
+};
+class FileStructure {
+public:
+    int image_width;
+    int image_height;
+    int samples_per_pixel;
+    int max_depth;
+    FileStructureCamera camera;
+    vector<FileStructureHittable> world;
+};
 
 
-    world.push_back(make_shared<HittableMaterial>(make_shared<Sphere>(point3(0,-1000,0), 1000), ground_material));
-    world.push_back(make_shared<HittableMaterial>(make_shared<Sphere>(point3(200,200,50), 20), light));    
-    
-    world.push_back(make_shared<HittableMaterial>(make_shared<Triangle>(point3(0,100,50), point3(0,0,0), point3(100,100,50)), light));    
-    world.push_back(make_shared<HittableMaterial>(make_shared<TriangleMesh>(point3(-100,0,0), "models/among us.obj"), lambertian));
-    
-    return make_shared<BvhNode>(world, 0,0);
-}
 
 class ConfigurationReader{
     public:
@@ -37,18 +78,125 @@ class ConfigurationReader{
             int &image_height,
             int &samples_per_pixel,
             int &max_depth, shared_ptr<camera>& cam){
+
+
+        ifstream t(filename);
+        string str;
+
+        t.seekg(0, ios::end);   
+        str.reserve(t.tellg());
+        t.seekg(0, ios::beg);
+
+        str.assign((istreambuf_iterator<char>(t)),
+                    istreambuf_iterator<char>());
+
+        str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
+
+        char * json_obj = new char[str.size() + 1];
+        std::copy(str.begin(), str.end(), json_obj);
+        json_obj[str.size()] = '\0';
+
+        FileStructure obj;
+        buffer_context ctx(json_obj, str.size() + 1);
+        parse_object(ctx, [&](const char* k, value v)
+        {
+            dispatch (k)
+            <<"image_width">> [&]{ obj.image_width = v.as_long(); }
+            <<"image_height">> [&]{ obj.image_height = v.as_long(); }
+            <<"samples_per_pixel">> [&]{ obj.samples_per_pixel = v.as_long(); }
+            <<"max_depth">> [&]{ obj.max_depth = v.as_long(); }
+            <<"camera">> [&]
+            {
+                parse_object(ctx, [&](const char* k, value v)
+                {
+                    dispatch (k)
+                    <<"aperture">> [&]{ obj.camera.aperture = v.as_double(); }
+                    <<"dist_to_focus">> [&]{ obj.camera.dist_to_focus = v.as_double(); }
+                    <<"lookfrom">> [&]{ 
+                        parse_array(ctx, [&](value v)
+                        {
+                            obj.camera.lookfrom.push_back(v.as_long());
+                        });
+                    }
+                    <<"lookat">> [&]{ 
+                        parse_array(ctx, [&](value v)
+                        {
+                            obj.camera.lookat.push_back(v.as_long());
+                        });
+                    }
+                    <<"vup">> [&]{ 
+                        parse_array(ctx, [&](value v)
+                        {
+                            obj.camera.vup.push_back(v.as_long());
+                        });
+                    }
+                    <<any>> [&]{ minijson::ignore(ctx); };
+                });
+            }
+            <<"world">> [&]{ 
+                parse_array(ctx, [&](value v)
+                {
+                    parse_object(ctx, [&](const char* k, value v)
+                    {
+                        string type;
+                        dispatch (k)
+                        <<"type">> [&]{ type = v.as_string(); }
+                        <<any>> [&]{ minijson::ignore(ctx); };
+                        if(type == "sphere"){
+                            FileStructureSphere sphere;
+                            
+                            dispatch (k)
+                            <<"position">> [&]{ 
+                                parse_array(ctx, [&](value v)
+                                {
+                                    sphere.position.push_back(v.as_long());
+                                });
+                            }
+                            <<"radius">> [&]{ sphere.radius = v.as_long(); }
+                            <<any>> [&]{ minijson::ignore(ctx); };
+                            obj.world.push_back(sphere);
+                        }
+                        if(type == "triangle_mesh"){
+                            FileStructureTriangleMesh objHittable;
+                            
+                            dispatch (k)
+                            <<"position">> [&]{ 
+                                parse_array(ctx, [&](value v)
+                                {
+                                    objHittable.position.push_back(v.as_long());
+                                });
+                            }
+                            <<"model">> [&]{ objHittable.model = v.as_string(); }
+                            <<any>> [&]{ minijson::ignore(ctx); };
+                            obj.world.push_back(objHittable);
+                        }
+                    });
+                });
+            }
+            <<any>> [&]{ minijson::ignore(ctx); };
+        });
+        delete[] json_obj;
         
-        world = random_scene();
-        image_width = 400;
-        image_height = 266;
-        samples_per_pixel = 50;
-        max_depth = 10;
-        point3 lookfrom(500,500,500);
-        point3 lookat(0,100,0);
-        vec3 vup(0,1,0);
-        auto dist_to_focus = 10.0;
-        auto aperture = 0.01;
-        cam = make_shared<camera>(lookfrom, lookat, vup, 20, image_width / image_height, aperture, dist_to_focus);
+        vector<shared_ptr<Hittable>> worldObjs;
+        for(int i = 0; i < obj.world.size(); i++){
+            worldObjs.push_back(obj.world[i].toHittable());
+        }
+        world = make_shared<BvhNode>(worldObjs, 0,0);
+        image_width = obj.image_width;
+        image_height = obj.image_height;
+        samples_per_pixel = obj.samples_per_pixel;
+        max_depth = obj.max_depth;
+        point3 lookfrom(obj.camera.lookfrom);
+        point3 lookat(obj.camera.lookat);
+        vec3 vup(obj.camera.vup);
+
+        cam = make_shared<camera>(
+            lookfrom, 
+            lookat, 
+            vup, 20, image_width / image_height, 
+            obj.camera.aperture, 
+            obj.camera.dist_to_focus
+        );
     }
     private:
     string filename;

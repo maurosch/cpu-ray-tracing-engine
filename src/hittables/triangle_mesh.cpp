@@ -107,7 +107,7 @@ void TriangleMesh::load(point3 origin, string fileName)
 }
 
 // Computa y retorna el bounding box del objeto
-bool TriangleMesh::bounding_box(double time0, double time1, AABB& output_box) const {
+bool TriangleMesh::bounding_box(AABB& output_box) const {
     if ( vpos.size() == 0 ) {
         output_box = AABB(point3(0,0,0), point3(0,0,0));
         return true;

@@ -27,8 +27,7 @@ class Hittable {
     public:
         Hittable(){};
         virtual bool hit(const ray& r, double t_min, double t_max, HitRecord& rec) const = 0;
-        virtual bool bounding_box(
-            double time0, double time1, AABB& output_box) const = 0;
+        virtual bool bounding_box(AABB& output_box) const = 0;
 };
 
 class HittableMaterial : public Hittable {
@@ -41,8 +40,8 @@ class HittableMaterial : public Hittable {
             }
             return false;
         };
-        bool bounding_box(double time0, double time1, AABB& output_box) const override {
-            return hittable->bounding_box(time0, time1, output_box);
+        bool bounding_box(AABB& output_box) const override {
+            return hittable->bounding_box(output_box);
         };
 
     private:

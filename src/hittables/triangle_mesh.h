@@ -33,7 +33,7 @@ class TriangleMesh : public Hittable
         // Abrimos el obj
         void load( point3 origin, string fileName );
         
-        bool bounding_box(double time0, double time1, AABB& output_box) const;
+        bool bounding_box(AABB& output_box) const;
         
         // Desplazar y escalar
         /*void shiftAndScale( shift, scale );

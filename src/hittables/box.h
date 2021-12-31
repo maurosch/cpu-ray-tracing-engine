@@ -81,7 +81,7 @@ class Box : public Hittable {
             };
         }
 
-        bool bounding_box(double time0, double time1, AABB& output_box) const {
+        bool bounding_box(AABB& output_box) const {
             output_box = AABB(firstCorner, secondCorner);
             return true;
         }
