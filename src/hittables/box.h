@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "hittable.h"
-#include "../vec3.h"
+#include "../utils/vec3.h"
 #include "square.h"
 
 using namespace std;

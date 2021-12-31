@@ -1,6 +1,6 @@
 #include <vector>
 #include <fstream>
-#include "vec3.h"
+#include "../utils/vec3.h"
 using namespace std;
 
 class ImageWriter {

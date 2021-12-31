@@ -2,7 +2,7 @@
 #define SQUARE_H
 
 #include "hittable.h"
-#include "../vec3.h"
+#include "../utils/vec3.h"
 #include "triangle.h"
 
 

@@ -1,6 +1,6 @@
 #include "triangle_mesh.h"
 #include "hittable.h"
-#include "../vec3.h"
+#include "../utils/vec3.h"
 #include <fstream>
 #include <vector>
 #include <regex>
@@ -12,9 +12,7 @@ using namespace std;
 
 TriangleMesh::TriangleMesh(point3 origin, string fileName) {
     load(origin, fileName);
-    hierarchy = make_shared<BvhNode>(
-        innerTriangles, 0, 0
-    );
+    hierarchy = make_shared<BvhNode>(innerTriangles);
 }
 
 std::vector<std::string> split(const string& input, const string& regex) {

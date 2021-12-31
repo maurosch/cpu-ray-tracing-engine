@@ -1,7 +1,7 @@
 #ifndef BVH_H
 #define BVH_H
 
-#include "../rtweekend.h"
+#include "../utils/rtweekend.h"
 #include "hittable.h"
 #include "aabb.h"
 #include <algorithm>

@@ -3,7 +3,7 @@
     #include <thread>
 #endif
 #include "percentage.h"
-#include "color.h"
+#include "utils/color.h"
 #include "camera.h"
 #include "hittables/material.h"
 

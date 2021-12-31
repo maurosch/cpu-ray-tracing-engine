@@ -4,8 +4,8 @@
 #include "camera.h"
 #include <iostream>
 #include <vector>
-#include "vec3.h"
-#include "rtweekend.h"
+#include "utils/vec3.h"
+#include "utils/rtweekend.h"
 #include "hittables/bvh.h"
 
 using namespace std;

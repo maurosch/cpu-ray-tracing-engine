@@ -1,8 +1,8 @@
 #ifndef AXIS_ALIGNED_BOUNDING_BOX_H
 #define AXIS_ALIGNED_BOUNDING_BOX_H
 
-#include "../rtweekend.h"
-#include "../vec3.h"
+#include "../utils/rtweekend.h"
+#include "../utils/vec3.h"
 #include "../ray.h"
 using namespace std;
 

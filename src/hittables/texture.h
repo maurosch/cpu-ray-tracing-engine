@@ -1,8 +1,8 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include "../rtweekend.h"
-#include "../vec3.h"
+#include "../utils/rtweekend.h"
+#include "../utils/vec3.h"
 
 
 class Texture {

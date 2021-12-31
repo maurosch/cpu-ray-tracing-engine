@@ -1,14 +1,14 @@
 #include "camera.h"
-#include "color.h"
+#include "utils/color.h"
 #include "hittables/sphere.h"
 #include "hittables/material.h"
 #include "hittables/triangle_mesh.h"
 #include <iostream>
 #include <vector>
 #include "percentage.h"
-#include "vec3.h"
-#include "rtweekend.h"
-#include "image_writer.h"
+#include "utils/vec3.h"
+#include "utils/rtweekend.h"
+#include "utils/image_writer.h"
 #include "engine.h"
 #include "configuration.h"
 

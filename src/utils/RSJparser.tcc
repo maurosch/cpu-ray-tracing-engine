@@ -469,7 +469,7 @@ std::string RSJresource::as_str (bool print_comments, bool update_data) {
              ret = strtrim (data);
         
         if (update_data) data = ret;
-        return (ret);
+        return (ret).substr(1, ret.size()-2);
     }
     else
         return ("");

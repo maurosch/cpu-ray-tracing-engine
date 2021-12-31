@@ -2,7 +2,7 @@
 #define TRIANGLE_H
 
 #include "hittable.h"
-#include "../vec3.h"
+#include "../utils/vec3.h"
 
 class Triangle : public Hittable {
     public:
