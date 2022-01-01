@@ -10,7 +10,6 @@ add_executable(
   src/hittables/bvh.cpp
   src/hittables/triangle_mesh.cpp
   src/engine.cpp
-  src/json/minijson_reader.hpp
 )
 
 include(FetchContent)
@@ -30,11 +29,11 @@ target_link_libraries(main PRIVATE Threads::Threads)
 enable_testing()
 
 add_executable(
-  spaceDividerTest
+  test
   src/hittables/triangle_mesh.cpp
 )
 
-target_link_libraries(spaceDividerTest gtest_main)
+target_link_libraries(test gtest_main)
 
 include(GoogleTest)
-gtest_discover_tests(spaceDividerTest)
+gtest_discover_tests(test)
