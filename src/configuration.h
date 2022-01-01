@@ -4,17 +4,21 @@
 #include "utils/vec3.h"
 #include "camera.h"
 #include "hittables/bvh.h"
-#include "hittables/material.h"
+#include "material/material.h"
+#include "material/image_texture.h"
 #include "hittables/sphere.h"
 #include "hittables/triangle.h"
 #include "hittables/triangle_mesh.h"
-#include "utils/RSJparser.tcc"
+#include "externals/RSJparser.tcc"
 
 class ConfigurationReader{
 public:
     ConfigurationReader(string filename) : filename(filename) {}
+    
+    
     void read(
             shared_ptr<BvhNode> &world, 
+            color &background,
             int &image_width,
             int &image_height,
             int &samples_per_pixel,
@@ -24,55 +28,13 @@ public:
         RSJresource my_json(t);  
         vector<shared_ptr<Hittable>> worldObjs;
         for(int i = 0; i < my_json["world"].size(); i++){
-            auto type = my_json["world"][i]["type"].as_str();
-            auto materialType = my_json["world"][i]["material"]["type"].as_str();
-            auto materialColor = my_json["world"][i]["material"]["color"].as_vector<double>();
-            shared_ptr<Hittable> v; 
-            shared_ptr<Material> material;
-            if(type == "sphere"){
-                v = make_shared<Sphere>(
-                    my_json["world"][i]["position"].as_vector<int>(),
-                    my_json["world"][i]["radius"].as<int>()
-                );
-            }
-            else if(type == "triangle_mesh"){
-                v = make_shared<TriangleMesh>(
-                    my_json["world"][i]["position"].as_vector<int>(),
-                    my_json["world"][i]["model"].as_str()
-                );
-            }
-            else if(type == "triangle"){
-                v = make_shared<Triangle>(
-                    my_json["world"][i]["points"][0].as_vector<int>(), 
-                    my_json["world"][i]["points"][1].as_vector<int>(), 
-                    my_json["world"][i]["points"][2].as_vector<int>()
-                );
-            }
-            else {
-                throw invalid_argument( "wrong type hittable in json" );
-            }
-
-            if(materialType == "lambertian"){
-                material = make_shared<Lambertian>(color(materialColor));
-            }
-            else if(materialType == "metal"){
-                material = make_shared<Metal>(color(materialColor));
-            }
-            else if(materialType == "dielectric"){
-                material = make_shared<Dielectric>(
-                    my_json["world"][i]["material"]["refraction"].as<double>() 
-                );
-            }
-            else if(materialType == "diffuse_light"){
-                material = make_shared<DiffuseLight>(color(materialColor));
-            }
-            else {
-                throw invalid_argument("wrong type material in json");
-            }
-
+            shared_ptr<Hittable> v = parseHittable(my_json["world"][i]); 
+            shared_ptr<Material> material = parseMaterial(my_json["world"][i]["material"]);
+            
             worldObjs.push_back(make_shared<HittableMaterial>(v, material));
         }
         world = make_shared<BvhNode>(worldObjs);
+        background = color(my_json["background"].as_vector<double>());
         image_width = my_json["image_width"].as<int>();
         image_height = my_json["image_height"].as<int>();
         samples_per_pixel = my_json["samples_per_pixel"].as<int>();
@@ -91,6 +53,77 @@ public:
     }
 private:
     string filename;
+
+    shared_ptr<Hittable> parseHittable(RSJresource& my_json){
+        auto type = my_json["type"].as_str();
+        if(type == "sphere"){
+            return make_shared<Sphere>(
+                my_json["position"].as_vector<int>(),
+                my_json["radius"].as<int>()
+            );
+        }
+        else if(type == "triangle_mesh"){
+            return make_shared<TriangleMesh>(
+                my_json["position"].as_vector<int>(),
+                my_json["model"].as_str()
+            );
+        }
+        else if(type == "triangle"){
+            return make_shared<Triangle>(
+                my_json["points"][0].as_vector<int>(), 
+                my_json["points"][1].as_vector<int>(), 
+                my_json["points"][2].as_vector<int>()
+            );
+        }
+        throw invalid_argument( "wrong type hittable in json" );
+    }
+
+    shared_ptr<Material> parseMaterial(RSJresource& my_json){
+        auto materialType = my_json["type"].as_str();
+        
+        if(materialType == "lambertian"){
+            return make_shared<Lambertian>(
+                color(my_json["color"].as_vector<double>())
+            );
+        } 
+        else if(materialType == "lambertian-texture"){
+            return make_shared<Lambertian>(
+                parseTexture(my_json["texture"])
+            );
+        }
+        else if(materialType == "metal"){
+            return make_shared<Metal>(color(my_json["color"].as_vector<double>()));
+        }
+        else if(materialType == "dielectric"){
+            return make_shared<Dielectric>(
+                my_json["refraction"].as<double>() 
+            );
+        }
+        else if(materialType == "diffuse_light"){
+            return make_shared<DiffuseLight>(
+                color(my_json["color"].as_vector<double>()),
+                my_json["intensity"].as<double>()
+            );
+        }
+        throw invalid_argument("wrong type material in json");
+    }
+
+    shared_ptr<Texture> parseTexture(RSJresource& my_json){
+        shared_ptr<Texture> text;
+        auto type = my_json["type"].as_str();
+        if(type == "image"){
+            return make_shared<ImageTexture>(
+                my_json["path"].as_str()
+            );
+        } 
+        else if(type == "checker"){
+            return make_shared<Checker>(
+                color(my_json["color1"].as_vector<double>()),
+                color(my_json["color2"].as_vector<double>())
+            );
+        }
+        return text;
+    }
 };
 
 #endif

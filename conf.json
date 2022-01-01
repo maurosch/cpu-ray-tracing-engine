@@ -1,11 +1,12 @@
 {
-    "image_width": 400,
-    "image_height": 266,
-    "samples_per_pixel": 50,
-    "max_depth": 10,
+    "image_width": 640,
+    "image_height": 480,
+    "samples_per_pixel": 100,
+    "max_depth": 25,
+    "background": [0,0,0],
     "camera": {
         "lookfrom" : [500,500,500],
-        "lookat": [0,100,0],
+        "lookat": [-50,100,0],
         "vup": [0,1,0],
         "dist_to_focus": 10.0,
         "aperture": 0.01
@@ -26,17 +27,37 @@
             "position": [-100,0,0],
             "material": {
                 "type": "lambertian",
-                "color": [0.5, 0.5, 0.5]
+                "color": [1,0,0]
             }
         },
         {
-            "type": "triangle",
-            "points": [
-                [0,100,50], [0,0,0], [100,100,50]
-            ],
+            "type": "sphere",
+            "position": [30,30,0],
+            "radius": 30,
             "material": {
-                "type": "lambertian",
-                "color": [0.5, 0.5, 0.5]
+                "type": "diffuse_light",
+                "color": [1,1,1],
+                "intensity": 4
+            }
+        },
+        {
+            "type": "sphere",
+            "position": [-100,30,-150],
+            "radius": 30,
+            "material": {
+                "type": "diffuse_light",
+                "color": [1,1,1],
+                "intensity": 4
+            }
+        },
+        {
+            "type": "sphere",
+            "position": [-100,30,150],
+            "radius": 30,
+            "material": {
+                "type": "diffuse_light",
+                "color": [1,1,1],
+                "intensity": 4
             }
         }
     ]

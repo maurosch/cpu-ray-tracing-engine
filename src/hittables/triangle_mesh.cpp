@@ -5,7 +5,7 @@
 #include <vector>
 #include <regex>
 #include <string>
-#include "material.h"
+#include "../material/material.h"
 
 
 using namespace std;
@@ -106,22 +106,7 @@ void TriangleMesh::load(point3 origin, string fileName)
 
 // Computa y retorna el bounding box del objeto
 bool TriangleMesh::bounding_box(AABB& output_box) const {
-    if ( vpos.size() == 0 ) {
-        output_box = AABB(point3(0,0,0), point3(0,0,0));
-        return true;
-    }
-    point3 min = vpos[0];
-    point3 max = vpos[0];
-    for ( int i = 1; i < vpos.size(); i++ ) 
-    {
-        for ( int j = 0; j < 3; j++ ) 
-        {
-            if ( min[j] > vpos[i][j] ) min[j] = vpos[i][j];
-            if ( max[j] < vpos[i][j] ) max[j] = vpos[i][j];
-        }
-    }
-    output_box = AABB(min, max);
-    return true;
+    return hierarchy->bounding_box(output_box);
 }
 
 bool TriangleMesh::hit(const ray& r, double t_min, double t_max, HitRecord& rec) const {

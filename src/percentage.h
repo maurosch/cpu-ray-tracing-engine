@@ -7,6 +7,7 @@
     #include <thread> 
 #endif
 using namespace std;
+using namespace chrono;
 
 inline string printTime(int seconds){
     if(seconds > 60){
@@ -21,32 +22,36 @@ class PercentageIndicator {
         PercentageIndicator(){
             _percentage = 0;
             lastPercentage = 0;
-            lastTime = chrono::system_clock::now();
+            lastTime = system_clock::now();
             _eta = 0;
         }
         int percentage(){
             return _percentage*100;
         }
-        int eta(){
+        int et(){
+            updateET();
             return _eta;
         }
+        void updateET(){
+            auto elapsed_seconds = duration_cast<seconds> (
+                system_clock::now() - lastTime
+            ).count();
+            
+            _eta = (1-_percentage)/_percentage*elapsed_seconds;
+            
+            lastPercentage = _percentage;
+        };
         void update(float newPercentage){
-            auto time = chrono::system_clock::now();
-            chrono::duration<double> elapsed_seconds = time - lastTime;
-            if(elapsed_seconds.count() > 2){
-                lastTime = time;
-                _eta = (1-newPercentage)/(newPercentage-lastPercentage)*elapsed_seconds.count();
-                lastPercentage = newPercentage;
-            }
             _percentage = newPercentage;
         };
         void print(ostream &out){
+            updateET();
             out << "\r";
             out << "| " << int(_percentage*100) << "% | ";
             out << "ETA: " << printTime(_eta) << flush;
         };
     private:
-        chrono::system_clock::time_point lastTime;
+        system_clock::time_point lastTime;
         float _eta;
         float lastPercentage;
         float _percentage;
@@ -70,7 +75,7 @@ class MultiThreadPercentageIndicator {
             printerThread = thread([&]() {
                 while(keepPrinting) {
                     print(out);
-                    this_thread::sleep_for(chrono::milliseconds(1000));
+                    this_thread::sleep_for(milliseconds(1000));
                 }
             });
         }
@@ -82,15 +87,15 @@ class MultiThreadPercentageIndicator {
             percentages[coreNumber].update(newPercentage);
         }
         void print(ostream &out){
-            out << "\r";
+            out << "\r| ";
             for(int p = 0; p < amountThreads; p++){
                 out << percentages[p].percentage() << "% | ";
             }
             int maxEta = 0;
             for(int p = 0; p < amountThreads; p++){
-                maxEta = max(maxEta, percentages[p].eta());
+                maxEta = max(maxEta, percentages[p].et());
             }
-            out << "ETA: " << printTime(maxEta) << flush;
+            out << "Estimated Time: " << printTime(maxEta) << flush;
         };
 };
 #endif

@@ -14,11 +14,12 @@ class GraphicsEngine {
     public:
         GraphicsEngine(
             shared_ptr<BvhNode> world,
+            color background,
             int image_width,
             int image_height,
             int samples_per_pixel,
             int max_depth,
-            camera cam) : world(world), cam(cam), image_width(image_width),
+            camera cam) : world(world), background(background), cam(cam), image_width(image_width),
                 image_height(image_height),
                 samples_per_pixel(samples_per_pixel),
                 max_depth(max_depth) {}
@@ -34,6 +35,7 @@ class GraphicsEngine {
         int image_height;
         int samples_per_pixel;
         int max_depth;
+        color background;
         
         color ray_color(const ray& r, int depth);
         color renderSinglePixel(int i, int j);

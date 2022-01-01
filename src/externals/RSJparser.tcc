@@ -62,6 +62,7 @@ std::string to_string (RSJresourceType rt) {
         case RSJ_ARRAY: return("RSJ_ARRAY");
         case RSJ_LEAF: return("RSJ_LEAF");
     }
+    return "";
 }
 
 enum StrTrimDir { STRTRIM_L=1, STRTRIM_R=2, STRTRIM_LR=3 };
@@ -510,7 +511,7 @@ void RSJresource::parse_full (bool force, int max_depth, int* parse_count_for_ve
 
 inline 
 int seek_next (std::string* str_p, int start_pos, char character) {
-    
+    return 0;
 }
 
 inline 

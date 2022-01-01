@@ -5,10 +5,12 @@
 #include "percentage.h"
 #include "utils/color.h"
 #include "camera.h"
-#include "hittables/material.h"
+#include "material/material.h"
 
 
 shared_ptr<vector<vector<vec3>>> GraphicsEngine::render(){
+    auto begin = chrono::steady_clock::now();
+
     auto finalImage = make_shared<vector<vector<vec3>>>(image_height, vector<vec3>(image_width));
 
     #ifdef DISABLE_THREADS
@@ -27,15 +29,15 @@ shared_ptr<vector<vector<vec3>>> GraphicsEngine::render(){
         percentageIndicator.startPrinting(cout);
 
         vector<thread> threads;
+        auto height = [&](int v){return v/image_width;};
+        auto width = [&](int v){return v%image_width;};
+        int totalPixels = image_width*image_height;
+
         for(int p = 0; p < amountThreads; p++){
             threads.push_back(thread([&] (int numberProcessor) {
-                int initial = image_height/amountThreads*numberProcessor;
-                int ending = image_height/amountThreads*(numberProcessor+1);
-                for (int j = initial; j < ending; j++) {                    
-                    for (int i = 0; i < image_width; ++i) {
-                        (*finalImage)[j][i] = renderSinglePixel(i, j);
-                    }
-                    percentageIndicator.update(numberProcessor, (j+1-initial)/float(ending-initial));
+                for (int pos = numberProcessor; pos < totalPixels; pos += amountThreads) {
+                    (*finalImage)[height(pos)][width(pos)] = renderSinglePixel(width(pos), height(pos));
+                    percentageIndicator.update(numberProcessor, (pos)/float(totalPixels));
                 }
             }, p));
         }
@@ -44,6 +46,8 @@ shared_ptr<vector<vector<vec3>>> GraphicsEngine::render(){
         }
         percentageIndicator.stopPrinting();
     #endif
+
+    std::cout << endl << "Time spent: " << chrono::duration_cast<chrono::seconds> (chrono::steady_clock::now() - begin).count() << " seconds" << std::endl;
     return finalImage;
 }
 
@@ -80,7 +84,7 @@ color GraphicsEngine::ray_color(const ray& r, int depth) {
 
     // If the ray hits nothing, return the background color.
     if (!world->hit(r, 0.001, infinity, rec))
-        return color(0,0.1,0.1);
+        return background;
 
     ray scattered;
     color attenuation;

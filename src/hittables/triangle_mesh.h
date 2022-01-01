@@ -4,11 +4,8 @@
 #include "hittable.h"
 #include "../utils/vec3.h"
 #include "box.h"
-#include "material.h"
+#include "../material/material.h"
 #include "bvh.h"
-
-
-
 using namespace std;
 
 class TriangleMesh : public Hittable

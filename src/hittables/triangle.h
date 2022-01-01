@@ -39,13 +39,14 @@ class Triangle : public Hittable {
                 return false;
             // At this stage we can compute t to find out where the intersection point is on the line.
             float t = f * dot(edge2,q);
-            if (t > EPSILON) // ray intersection
+            if (t >= t_min + EPSILON && t <= t_max) // ray intersection
             {
                 rec.set_face_normal(r, normal);
                 rec.p = rayOrigin + rayVector * t;
                 return true;
             }
-            else // This means that there is a line intersection but not a ray intersection.
+            
+            // This means that there is a line intersection but not a ray intersection.
             return false;
         };
 

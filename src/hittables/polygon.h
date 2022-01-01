@@ -28,7 +28,7 @@ class Polygon : public Hittable {
 
             for(int i = 1; i < triangles.size(); i++){
                 triangles[i].bounding_box(aux);
-                output_box = surrounding_box(aux, output_box);
+                output_box = AABB::surrounding_box(aux, output_box);
             }
             
             return true;

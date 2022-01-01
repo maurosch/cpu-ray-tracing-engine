@@ -29,11 +29,11 @@ target_link_libraries(main PRIVATE Threads::Threads)
 enable_testing()
 
 add_executable(
-  test
+  testing
   src/hittables/triangle_mesh.cpp
 )
 
-target_link_libraries(test gtest_main)
+target_link_libraries(testing gtest_main)
 
 include(GoogleTest)
-gtest_discover_tests(test)
+gtest_discover_tests(testing)

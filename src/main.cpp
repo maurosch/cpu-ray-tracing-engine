@@ -1,7 +1,7 @@
 #include "camera.h"
 #include "utils/color.h"
 #include "hittables/sphere.h"
-#include "hittables/material.h"
+#include "material/material.h"
 #include "hittables/triangle_mesh.h"
 #include <iostream>
 #include <vector>
@@ -20,11 +20,13 @@ int main() {
     int image_height;
     int samples_per_pixel;
     int max_depth;
+    color background;
     shared_ptr<BvhNode> world;
     shared_ptr<camera> cam;
 
     ConfigurationReader("conf.json").read(
         world,
+        background,
         image_width,
         image_height,
         samples_per_pixel,
@@ -34,6 +36,7 @@ int main() {
 
     auto engine = GraphicsEngine(
         world,
+        background,
         image_width,
         image_height,
         samples_per_pixel,

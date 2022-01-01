@@ -22,7 +22,7 @@ class Square : public Hittable {
             AABB a, b;
             firstTriangle.bounding_box(a);
             secondTriangle.bounding_box(b);
-            output_box = surrounding_box(a, b);
+            output_box = AABB::surrounding_box(a, b);
                 
             return true;
         }

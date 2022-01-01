@@ -17,7 +17,8 @@ class Material {
 
 class Lambertian : public Material {
     public:
-        Lambertian(const color& a) : albedo(a) {}
+        Lambertian(const color& a) : albedo(make_shared<SolidColor>(a)) {}
+        Lambertian(shared_ptr<Texture> a) : albedo(a) {}
 
         virtual bool scatter(
             const ray& r_in, const HitRecord& rec, color& attenuation, ray& scattered
@@ -30,12 +31,12 @@ class Lambertian : public Material {
 
 
             scattered = ray(rec.p, scatter_direction);
-            attenuation = albedo;
+            attenuation = albedo->value(rec.u, rec.v, rec.p);
             return true;
         }
 
     public:
-        color albedo;
+        shared_ptr<Texture> albedo;
 };
 
 class Metal : public Material {
@@ -98,6 +99,7 @@ class DiffuseLight : public Material  {
     public:
         DiffuseLight(shared_ptr<Texture> a) : emit(a) {}
         DiffuseLight(color c) : emit(make_shared<SolidColor>(c)) {}
+        DiffuseLight(color c, float intensity) : emit(make_shared<SolidColor>(c * intensity)) {}
 
         virtual bool scatter(
             const ray& r_in, const HitRecord& rec, color& attenuation, ray& scattered
