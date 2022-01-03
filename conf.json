@@ -1,9 +1,9 @@
 {
-    "image_width": 640,
-    "image_height": 480,
-    "samples_per_pixel": 100,
-    "max_depth": 25,
-    "background": [0,0,0],
+    "image_width": 600,
+    "image_height": 300,
+    "samples_per_pixel": 25,
+    "max_depth": 10,
+    "background": [0.5,0.5,0.5],
     "camera": {
         "lookfrom" : [500,500,500],
         "lookat": [-50,100,0],
@@ -26,8 +26,11 @@
             "model": "models/among us.obj",
             "position": [-100,0,0],
             "material": {
-                "type": "lambertian",
-                "color": [1,0,0]
+                "type": "lambertian-texture",
+                "texture": {
+                    "type": "image",
+                    "path": "models/among us.jpg"
+                }
             }
         },
         {
@@ -53,6 +56,16 @@
         {
             "type": "sphere",
             "position": [-100,30,150],
+            "radius": 30,
+            "material": {
+                "type": "diffuse_light",
+                "color": [1,1,1],
+                "intensity": 4
+            }
+        },
+        {
+            "type": "sphere",
+            "position": [-100,200,150],
             "radius": 30,
             "material": {
                 "type": "diffuse_light",

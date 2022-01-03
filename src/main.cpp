@@ -1,52 +1,20 @@
-#include "camera.h"
-#include "utils/color.h"
-#include "hittables/sphere.h"
-#include "material/material.h"
-#include "hittables/triangle_mesh.h"
 #include <iostream>
-#include <vector>
+#include "camera.h"
 #include "percentage.h"
 #include "utils/vec3.h"
-#include "utils/rtweekend.h"
 #include "utils/image_writer.h"
 #include "engine.h"
 #include "configuration.h"
-
 using namespace std;
 
-
 int main() {
-    int image_width;
-    int image_height;
-    int samples_per_pixel;
-    int max_depth;
-    color background;
-    shared_ptr<BvhNode> world;
-    shared_ptr<camera> cam;
-
-    ConfigurationReader("conf.json").read(
-        world,
-        background,
-        image_width,
-        image_height,
-        samples_per_pixel,
-        max_depth,
-        cam
-    );
-
     auto engine = GraphicsEngine(
-        world,
-        background,
-        image_width,
-        image_height,
-        samples_per_pixel,
-        max_depth,
-        *cam
+        ConfigurationReader("conf.json").read()
     );
 
     engine.printRenderInfo(cout);
 
     PPMWriter("img.ppm", engine.render()).print();
 
-    cout << "\nDone.\n";
+    engine.printDurationInfo(cout);
 }

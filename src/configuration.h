@@ -1,6 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 #include <iostream>
+#include "engine.h"
 #include "utils/vec3.h"
 #include "camera.h"
 #include "hittables/bvh.h"
@@ -16,13 +17,7 @@ public:
     ConfigurationReader(string filename) : filename(filename) {}
     
     
-    void read(
-            shared_ptr<BvhNode> &world, 
-            color &background,
-            int &image_width,
-            int &image_height,
-            int &samples_per_pixel,
-            int &max_depth, shared_ptr<camera>& cam){
+    GraphicsEngineConfiguration read(){
 
         ifstream t(filename);
         RSJresource my_json(t);  
@@ -33,23 +28,25 @@ public:
             
             worldObjs.push_back(make_shared<HittableMaterial>(v, material));
         }
-        world = make_shared<BvhNode>(worldObjs);
-        background = color(my_json["background"].as_vector<double>());
-        image_width = my_json["image_width"].as<int>();
-        image_height = my_json["image_height"].as<int>();
-        samples_per_pixel = my_json["samples_per_pixel"].as<int>();
-        max_depth = my_json["max_depth"].as<int>();
+        GraphicsEngineConfiguration conf;
+        conf.world = make_shared<BvhNode>(worldObjs);
+        conf.background = color(my_json["background"].as_vector<double>());
+        conf.image_width = my_json["image_width"].as<int>();
+        conf.image_height = my_json["image_height"].as<int>();
+        conf.samples_per_pixel = my_json["samples_per_pixel"].as<int>();
+        conf.max_depth = my_json["max_depth"].as<int>();
         point3 lookfrom(my_json["camera"]["lookfrom"].as_vector<int>());
         point3 lookat(my_json["camera"]["lookat"].as_vector<int>());
         vec3 vup(my_json["camera"]["vup"].as_vector<int>());
 
-        cam = make_shared<camera>(
+        conf.cam = make_shared<camera>(
             lookfrom, 
             lookat, 
-            vup, 20, image_width / image_height, 
+            vup, 20, conf.image_width / conf.image_height, 
             my_json["camera"]["aperture"].as<double>(), 
             my_json["camera"]["dist_to_focus"].as<double>()
         );
+        return conf;
     }
 private:
     string filename;
@@ -94,6 +91,11 @@ private:
         else if(materialType == "metal"){
             return make_shared<Metal>(color(my_json["color"].as_vector<double>()));
         }
+        else if(materialType == "metal-texture"){
+            return make_shared<Metal>(
+                parseTexture(my_json["texture"])
+            );
+        }
         else if(materialType == "dielectric"){
             return make_shared<Dielectric>(
                 my_json["refraction"].as<double>() 
@@ -115,7 +117,7 @@ private:
             return make_shared<ImageTexture>(
                 my_json["path"].as_str()
             );
-        } 
+        }
         else if(type == "checker"){
             return make_shared<Checker>(
                 color(my_json["color1"].as_vector<double>()),

@@ -1,3 +1,5 @@
+#ifndef PERCENTAGE_H
+#define PERCENTAGE_H
 
 #include <iostream>
 #include <chrono>
@@ -6,16 +8,9 @@
 #ifndef DISABLE_THREADS
     #include <thread> 
 #endif
+#include "utils/time.h" 
 using namespace std;
 using namespace chrono;
-
-inline string printTime(int seconds){
-    if(seconds > 60){
-        int minutes = seconds/60;
-        return to_string(minutes)+" min "+to_string(seconds - minutes*60)+" seconds";
-    }
-    return to_string(seconds)+" seconds";
-}
 
 class PercentageIndicator {
     public:
@@ -48,7 +43,7 @@ class PercentageIndicator {
             updateET();
             out << "\r";
             out << "| " << int(_percentage*100) << "% | ";
-            out << "ETA: " << printTime(_eta) << flush;
+            out << "ETA: " << Time(_eta).toString() << flush;
         };
     private:
         system_clock::time_point lastTime;
@@ -95,7 +90,9 @@ class MultiThreadPercentageIndicator {
             for(int p = 0; p < amountThreads; p++){
                 maxEta = max(maxEta, percentages[p].et());
             }
-            out << "Estimated Time: " << printTime(maxEta) << flush;
+            out << "Estimated Time: " << Time(maxEta).toString() << flush;
         };
 };
+#endif
+
 #endif

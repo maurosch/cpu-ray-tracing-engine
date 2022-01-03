@@ -6,6 +6,7 @@
 #include "box.h"
 #include "../material/material.h"
 #include "bvh.h"
+#include "../externals/OBJ_Loader.h"
 using namespace std;
 
 class TriangleMesh : public Hittable
@@ -24,6 +25,7 @@ class TriangleMesh : public Hittable
         vector<Direction> norm;	// normales
         vector<vector<int>> nfac;	// indices de normales por cara
         vector<shared_ptr<Hittable>> innerTriangles;
+        shared_ptr<objl::Loader> objLoader;
 
         shared_ptr<BvhNode> hierarchy;
     
@@ -31,6 +33,8 @@ class TriangleMesh : public Hittable
         void load( point3 origin, string fileName );
         
         bool bounding_box(AABB& output_box) const;
+
+        pair<double,double> getUVTextCoords(const point3 p) const;
         
         // Desplazar y escalar
         /*void shiftAndScale( shift, scale );

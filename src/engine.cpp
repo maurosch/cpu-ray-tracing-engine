@@ -3,7 +3,6 @@
     #include <thread>
 #endif
 #include "percentage.h"
-#include "utils/color.h"
 #include "camera.h"
 #include "material/material.h"
 
@@ -47,7 +46,7 @@ shared_ptr<vector<vector<vec3>>> GraphicsEngine::render(){
         percentageIndicator.stopPrinting();
     #endif
 
-    std::cout << endl << "Time spent: " << chrono::duration_cast<chrono::seconds> (chrono::steady_clock::now() - begin).count() << " seconds" << std::endl;
+    computationDuration = chrono::duration_cast<chrono::seconds> (chrono::steady_clock::now() - begin).count();
     return finalImage;
 }
 
@@ -61,6 +60,20 @@ int GraphicsEngine::getAmountThreads(){
 
         return processor_count;
     #endif
+}
+
+vec3 GraphicsEngine::write_color(color pixel_color, int samples_per_pixel) {
+    auto r = pixel_color.x();
+    auto g = pixel_color.y();
+    auto b = pixel_color.z();
+
+    // Divide the color by the number of samples and gamma-correct for gamma=2.0.
+    auto scale = 1.0 / samples_per_pixel;
+    r = sqrt(scale * r);
+    g = sqrt(scale * g);
+    b = sqrt(scale * b);
+
+    return vec3(clamp(r, 0.0, 0.999), clamp(g, 0.0, 0.999), clamp(b, 0.0, 0.999));
 }
 
 
@@ -97,7 +110,6 @@ color GraphicsEngine::ray_color(const ray& r, int depth) {
 }
 
 void GraphicsEngine::printRenderInfo(ostream& out){
-    // Render
     out << "SAMPLES PER PIXEL: " << samples_per_pixel << endl;
     out << "RAY DEPTH: " << max_depth << endl;
     out << "RENDER DIMENSION: " << image_width << "x" << image_height << endl;
@@ -106,4 +118,9 @@ void GraphicsEngine::printRenderInfo(ostream& out){
     #else
         out << "AMOUNT THREADS: " << getAmountThreads() << endl;
     #endif
+}
+
+void GraphicsEngine::printDurationInfo(ostream& out){
+    out << endl << "Done in: " << Time(computationDuration).toString() << endl;
+
 }
