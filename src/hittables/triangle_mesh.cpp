@@ -6,42 +6,11 @@
 #include <regex>
 #include <string>
 #include "../material/material.h"
-
-
 using namespace std;
 
-point3 fromVec3(objl::Vector3 v){
-    return point3(v.X, v.Y, v.Z);
-}
 
 TriangleMesh::TriangleMesh(point3 origin, string fileName) {
     load(origin, fileName);
-    /*objLoader = make_shared<objl::Loader>();
-    if(!objLoader->LoadFile(fileName)){
-        throw invalid_argument("Failed to Load File. May have failed to find it or it was not an .obj file.\n");
-    };
-    for(int i = 0; i < objLoader->LoadedMeshes.size(); i++){
-        // Agregamos los triangulos del polígono (en forma de abanico)
-        for(int j = 2; j < objLoader->LoadedMeshes[i].Vertices.size(); j++){
-            auto firstPoint = fromVec3(objLoader->LoadedMeshes[i].Vertices[0].Position);
-            auto secondPoint = fromVec3(objLoader->LoadedMeshes[i].Vertices[j-1].Position);
-            auto thirdPoint = fromVec3(objLoader->LoadedMeshes[i].Vertices[j].Position);
-            auto normal = 
-                fromVec3(objLoader->LoadedMeshes[i].Vertices[0].Normal) +
-                fromVec3(objLoader->LoadedMeshes[i].Vertices[j-1].Normal) +
-                fromVec3(objLoader->LoadedMeshes[i].Vertices[j].Normal);
-            innerTriangles.push_back(
-                make_shared<Triangle>(
-                    firstPoint+origin, 
-                    secondPoint+origin, 
-                    thirdPoint+origin, 
-                    unit_vector(normal)
-                ));
-        }
-    }
-    std::cout
-        << "\r- meshamount:" << objLoader->LoadedMeshes.size()
-        << "\t| vertices > " << objLoader->LoadedMeshes[0].Vertices.size() << endl;*/
     hierarchy = make_shared<BvhNode>(innerTriangles);
 }
 
@@ -131,6 +100,11 @@ void TriangleMesh::load(point3 origin, string fileName)
                             norm[nf[0]] + 
                             norm[nf[j-1]] + 
                             norm[nf[j]]
+                        ),
+                        make_tuple(
+                            tpos[tf[0]],
+                            tpos[tf[j-1]],
+                            tpos[tf[j]]
                         )
                     ));
 			} 
@@ -144,19 +118,7 @@ bool TriangleMesh::bounding_box(AABB& output_box) const {
 }
 
 bool TriangleMesh::hit(const ray& r, double t_min, double t_max, HitRecord& rec) const {
-    if(hierarchy->hit(r, t_min, t_max, rec)){
-        auto uv = getUVTextCoords(rec.p);
-        rec.u = uv.first;
-        rec.v = uv.second;
-        return true;
-    }
-    return false;
-}
-
-pair<double,double> TriangleMesh::getUVTextCoords(const point3 p) const {
-    double u = 1;
-    double v = 1;
-    return make_pair(u,v);
+    return hierarchy->hit(r, t_min, t_max, rec);
 }
 
 // Desplazar y escalar

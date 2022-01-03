@@ -1,9 +1,9 @@
 {
-    "image_width": 600,
+    "image_width": 550,
     "image_height": 300,
-    "samples_per_pixel": 25,
+    "samples_per_pixel": 200,
     "max_depth": 10,
-    "background": [0.5,0.5,0.5],
+    "background": [0,0,0],
     "camera": {
         "lookfrom" : [500,500,500],
         "lookat": [-50,100,0],

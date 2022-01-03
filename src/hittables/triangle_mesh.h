@@ -6,7 +6,6 @@
 #include "box.h"
 #include "../material/material.h"
 #include "bvh.h"
-#include "../externals/OBJ_Loader.h"
 using namespace std;
 
 class TriangleMesh : public Hittable
@@ -18,14 +17,13 @@ class TriangleMesh : public Hittable
         int amountTriangles(){return face.size();};
 
 	private:
-        vector<point3> vpos;
-        vector<vector<int>> face;	// índices de las caras
-        vector<vector<float>> tpos;	// coordenadas de texturas
+        vector<point3> vpos;        // vertices
+        vector<vector<int>> face;	// indices de las caras
+        vector<pair<float,float>> tpos;	// coordenadas de texturas
         vector<vector<int>> tfac;	// indices de coordenadas de textura por cara
-        vector<Direction> norm;	// normales
+        vector<Direction> norm;	    // normales
         vector<vector<int>> nfac;	// indices de normales por cara
         vector<shared_ptr<Hittable>> innerTriangles;
-        shared_ptr<objl::Loader> objLoader;
 
         shared_ptr<BvhNode> hierarchy;
     

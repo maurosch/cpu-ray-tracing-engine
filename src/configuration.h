@@ -19,6 +19,8 @@ public:
     
     GraphicsEngineConfiguration read(){
 
+        cout << "Loading configuration and scenary... " << flush;
+
         ifstream t(filename);
         RSJresource my_json(t);  
         vector<shared_ptr<Hittable>> worldObjs;
@@ -46,6 +48,8 @@ public:
             my_json["camera"]["aperture"].as<double>(), 
             my_json["camera"]["dist_to_focus"].as<double>()
         );
+
+        cout << "done!" << endl;
         return conf;
     }
 private:

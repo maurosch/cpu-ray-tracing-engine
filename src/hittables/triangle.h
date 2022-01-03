@@ -5,15 +5,23 @@
 #include "../utils/vec3.h"
 #include <cmath>
 
+typedef pair<float,float> uvCoord;
+using namespace std;
 
 class Triangle : public Hittable {
     public:
         Triangle(point3 firstPoint, point3 secondPoint, point3 thirdPoint) 
             : firstPoint(firstPoint), secondPoint(secondPoint), thirdPoint(thirdPoint), 
             normal(cross(secondPoint-firstPoint, thirdPoint-firstPoint)) {};
+        
         Triangle(point3 firstPoint, point3 secondPoint, point3 thirdPoint, vec3 normal) 
             : firstPoint(firstPoint), secondPoint(secondPoint), thirdPoint(thirdPoint), normal(normal) {};
         
+        Triangle(point3 firstPoint, point3 secondPoint, point3 thirdPoint, vec3 normal, 
+            tuple<uvCoord, uvCoord, uvCoord> tcoords)
+            : firstPoint(firstPoint), secondPoint(secondPoint), thirdPoint(thirdPoint), normal(normal), tcoords(tcoords) {};
+        
+
         virtual bool hit(const ray& r, double t_min, double t_max, HitRecord& rec) const override {
             
             const float EPSILON = 0.0000001;
@@ -48,6 +56,16 @@ class Triangle : public Hittable {
             rec.set_face_normal(r, normal);
             rec.t = t;
             rec.p = r.at(rec.t);
+
+            auto fl = (rec.p - firstPoint).length();
+            auto sl = (rec.p - secondPoint).length();
+            auto tl = (rec.p - thirdPoint).length();
+            auto totall = fl + sl + tl;
+
+            rec.u = get<0>(tcoords).first;
+            rec.v = get<0>(tcoords).second;
+            //rec.u = (get<0>(tcoords).first * fl + get<1>(tcoords).first * sl + get<2>(tcoords).first * tl) / totall;
+            //rec.v = (get<0>(tcoords).second * fl + get<1>(tcoords).second * sl + get<2>(tcoords).second * tl) / totall;
             return true;
         };
 
@@ -72,6 +90,7 @@ class Triangle : public Hittable {
         point3 secondPoint;
         point3 thirdPoint;
         vec3 normal;
+        tuple<uvCoord, uvCoord, uvCoord> tcoords;
 };
 
 #endif

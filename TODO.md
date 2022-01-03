@@ -1,4 +1,3 @@
-- Agregar texturas.
 - Filtro gaussiano para suavizar salida.
 - Agregar formatos de imágenes salida.
 - Completar informe.
