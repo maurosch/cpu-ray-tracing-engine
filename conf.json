@@ -1,11 +1,13 @@
 {
+    "filename_output": "img.jpg",
+    "format_output": "jpg",
     "image_width": 550,
     "image_height": 300,
-    "samples_per_pixel": 200,
+    "samples_per_pixel": 50,
     "max_depth": 10,
-    "background": [0,0,0],
+    "background": [0.5,0.5,0.5],
     "camera": {
-        "lookfrom" : [500,500,500],
+        "lookfrom" : [1000,1000,1000],
         "lookat": [-50,100,0],
         "vup": [0,1,0],
         "dist_to_focus": 10.0,
@@ -23,14 +25,12 @@
         },
         {
             "type": "triangle_mesh",
-            "model": "models/among us.obj",
-            "position": [-100,0,0],
+            "model": "models/dragon.obj",
+            "rotate": [0, -30, 0],
+            "position": [-100,200,0],
             "material": {
-                "type": "lambertian-texture",
-                "texture": {
-                    "type": "image",
-                    "path": "models/among us.jpg"
-                }
+                "type": "lambertian",
+                "color": [1,0,0]
             }
         },
         {
@@ -56,16 +56,6 @@
         {
             "type": "sphere",
             "position": [-100,30,150],
-            "radius": 30,
-            "material": {
-                "type": "diffuse_light",
-                "color": [1,1,1],
-                "intensity": 4
-            }
-        },
-        {
-            "type": "sphere",
-            "position": [-100,200,150],
             "radius": 30,
             "material": {
                 "type": "diffuse_light",

@@ -8,13 +8,16 @@
 using namespace std;
 
 int main() {
+    shared_ptr<ImageWriter> imageWriter;
     auto engine = GraphicsEngine(
-        ConfigurationReader("conf.json").read()
+        ConfigurationReader("conf.json").read(imageWriter)
     );
+
+    imageWriter->printInfo(cout);
 
     engine.printRenderInfo(cout);
 
-    PPMWriter("img.ppm", engine.render()).print();
+    imageWriter->print(engine.render());
 
     engine.printDurationInfo(cout);
 }

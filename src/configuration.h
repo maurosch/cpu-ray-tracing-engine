@@ -17,7 +17,7 @@ public:
     ConfigurationReader(string filename) : filename(filename) {}
     
     
-    GraphicsEngineConfiguration read(){
+    GraphicsEngineConfiguration read(shared_ptr<ImageWriter> &imageWriter){
 
         cout << "Loading configuration and scenary... " << flush;
 
@@ -49,6 +49,17 @@ public:
             my_json["camera"]["dist_to_focus"].as<double>()
         );
 
+        const auto outputFormat = my_json["format_output"].as_str();
+        const auto outputName = my_json["filename_output"].as_str();
+        if(outputFormat == "jpg")
+            imageWriter = make_shared<JPGWriter>(outputName);
+        else if(outputFormat == "png")
+            imageWriter = make_shared<PNGWriter>(outputName);
+        else if(outputFormat == "ppm")
+            imageWriter = make_shared<PPMWriter>(outputName);
+        else 
+            throw invalid_argument( "wrong type output format" );
+
         cout << "done!" << endl;
         return conf;
     }
@@ -65,8 +76,10 @@ private:
         }
         else if(type == "triangle_mesh"){
             return make_shared<TriangleMesh>(
+                my_json["model"].as_str(),
                 my_json["position"].as_vector<int>(),
-                my_json["model"].as_str()
+                my_json["scale"].exists() ? my_json["scale"].as<double>() : 1, 
+                my_json["rotate"].exists() ? my_json["rotate"].as_vector<double>() : vec3(0.0,0.0,0.0)
             );
         }
         else if(type == "triangle"){

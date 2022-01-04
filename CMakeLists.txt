@@ -30,7 +30,7 @@ enable_testing()
 
 add_executable(
   testing
-  src/hittables/triangle_mesh.cpp
+  tests/main.cpp
 )
 
 target_link_libraries(testing gtest_main)

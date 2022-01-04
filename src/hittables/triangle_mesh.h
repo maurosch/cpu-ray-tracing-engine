@@ -8,45 +8,18 @@
 #include "bvh.h"
 using namespace std;
 
-class TriangleMesh : public Hittable
-{
-    public:
-        TriangleMesh(point3 origin, string fileName);
-        virtual bool hit(
-            const ray& r, double t_min, double t_max, HitRecord& rec) const override;
-        int amountTriangles(){return face.size();};
+class TriangleMesh : public Hittable {
+public:
+    TriangleMesh(string fileName, point3 origin) : TriangleMesh(fileName, origin, 1, vec3(0,0,0)){};
+    TriangleMesh(string fileName, point3 origin, float scale, vec3 rotate);
+    virtual bool hit(
+        const ray& r, double t_min, double t_max, HitRecord& rec) const override;
 
-	private:
-        vector<point3> vpos;        // vertices
-        vector<vector<int>> face;	// indices de las caras
-        vector<pair<float,float>> tpos;	// coordenadas de texturas
-        vector<vector<int>> tfac;	// indices de coordenadas de textura por cara
-        vector<Direction> norm;	    // normales
-        vector<vector<int>> nfac;	// indices de normales por cara
-        vector<shared_ptr<Hittable>> innerTriangles;
-
-        shared_ptr<BvhNode> hierarchy;
-    
-        // Abrimos el obj
-        void load( point3 origin, string fileName );
-        
-        bool bounding_box(AABB& output_box) const;
-
-        pair<double,double> getUVTextCoords(const point3 p) const;
-        
-        // Desplazar y escalar
-        /*void shiftAndScale( shift, scale );
-        
-        void addTriangleToBuffers( vBuffer, tBuffer, nBuffer, fi, i, j, k );
-        
-        void addTriangleToBuffer( buffer, v, f, i, j, k, addVert );
-        
-        void addVertToBuffer3( buffer, v, f, i );
-
-        void addVertToBuffer2( buffer, v, f, i );
-
-        // Devuelve las posiciones de los vértices, las coordenadas de textura y las normales
-        void getVertexBuffers();*/
+private:
+    shared_ptr<BvhNode> hierarchy;
+    void load( point3 origin, string fileName );
+    bool bounding_box(AABB& output_box) const;
+    pair<double,double> getUVTextCoords(const point3 p) const;
 };
 
 #endif

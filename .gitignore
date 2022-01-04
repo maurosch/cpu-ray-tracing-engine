@@ -5,5 +5,8 @@ img.ppm
 main.dSYM/
 .gdb_history
 img.ppm
+img.jpg
+img.png
+
 build/*
 !build/.gitignore

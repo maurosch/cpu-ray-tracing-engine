@@ -8,3 +8,5 @@ Edit `conf.json` for adding scene objects or changing visualization options of t
 1. `cmake CMakeLists.txt -B build`
 2. `cmake --build build`
 3. Lastly, to run: `./build/main`
+
+Note: On windows you need to install posix pthreads or you can disable threads with flag `DISABLE_THREADS` when compiling.

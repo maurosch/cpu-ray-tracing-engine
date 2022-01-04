@@ -65,6 +65,8 @@ class vec3 {
             return (fabs(e[0]) < s) && (fabs(e[1]) < s) && (fabs(e[2]) < s);
         }
 
+        
+
     public:
         double e[3];
 };
@@ -98,6 +100,10 @@ inline vec3 operator*(const vec3 &v, double t) {
 inline vec3 operator/(vec3 v, double t) {
     return (1/t) * v;
 }
+
+inline bool operator==(const vec3& a, const vec3& b){
+    return a[0] == b[0] && a[1] == b[1] && a[2] == b[2];
+};
 
 inline double dot(const vec3 &u, const vec3 &v) {
     return u.e[0] * v.e[0]
