@@ -2,6 +2,7 @@
 #define MATERIAL_H
 
 #include "texture.h"
+#include "../ray.h"
 
 struct HitRecord;
 
@@ -116,6 +117,23 @@ class DiffuseLight : public Material  {
 
     public:
         shared_ptr<Texture> emit;
+};
+
+class Isotropic : public Material {
+    public:
+        Isotropic(color c) : albedo(make_shared<SolidColor>(c)) {}
+        Isotropic(shared_ptr<Texture> a) : albedo(a) {}
+
+        virtual bool scatter(
+            const ray& r_in, const HitRecord& rec, color& attenuation, ray& scattered
+        ) const override {
+            scattered = ray(rec.p, random_in_unit_sphere());
+            attenuation = albedo->value(rec.u, rec.v, rec.p);
+            return true;
+        }
+
+    public:
+        shared_ptr<Texture> albedo;
 };
 
 #endif

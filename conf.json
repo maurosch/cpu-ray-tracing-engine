@@ -1,11 +1,11 @@
 {
     "filename_output": "img.jpg",
     "format_output": "jpg",
-    "image_width": 550,
-    "image_height": 300,
-    "samples_per_pixel": 50,
+    "image_width": 1100,
+    "image_height": 600,
+    "samples_per_pixel": 20,
     "max_depth": 10,
-    "background": [0.5,0.5,0.5],
+    "background": [0,0,0],
     "camera": {
         "lookfrom" : [1000,1000,1000],
         "lookat": [-50,100,0],
@@ -15,52 +15,56 @@
     },
     "world": [
         {
-            "type": "sphere",
-            "position": [0,-1000,0],
-            "radius": 1000,
+            "type": "polygon",
+            "points": [
+                [-1000,0,-1000],
+                [1000,0,-1000],
+                [1000,0,1000],
+                [-1000,0,1000]
+            ],
             "material": {
                 "type": "lambertian",
-                "color": [0.5, 0.5, 0.5]
+                "color": [0, 0.8, 0.6]
             }
         },
         {
             "type": "triangle_mesh",
             "model": "models/dragon.obj",
-            "rotate": [0, -30, 0],
-            "position": [-100,200,0],
+            "rotate": [0, 0, 0],
+            "scale": 2,
+            "position": [0,50,0],
             "material": {
-                "type": "lambertian",
+                "type": "dielectric",
                 "color": [1,0,0]
             }
         },
         {
-            "type": "sphere",
-            "position": [30,30,0],
-            "radius": 30,
+            "type": "polygon",
+            "points": [
+                [-200,200,100],
+                [-200,200,-0],
+                [-200,0,-0],
+                [-200,0,100]
+            ],
+            "radius": 60,
             "material": {
                 "type": "diffuse_light",
                 "color": [1,1,1],
-                "intensity": 4
+                "intensity": 10
             }
         },
         {
-            "type": "sphere",
-            "position": [-100,30,-150],
-            "radius": 30,
+            "type": "constant_medium",
+            "density": 0.0001,
+            "color": [1,1,1],
+            "boundary": {
+                "type": "sphere",
+                "position": [0,0,0],
+                "radius": 500
+            },
             "material": {
-                "type": "diffuse_light",
-                "color": [1,1,1],
-                "intensity": 4
-            }
-        },
-        {
-            "type": "sphere",
-            "position": [-100,30,150],
-            "radius": 30,
-            "material": {
-                "type": "diffuse_light",
-                "color": [1,1,1],
-                "intensity": 4
+                "type": "solid_color",
+                "color": [1,1,1]
             }
         }
     ]

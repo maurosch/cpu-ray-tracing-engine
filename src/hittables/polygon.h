@@ -6,11 +6,36 @@
 #include "triangle.h"
 #include <vector>
 
+inline vector<Triangle> polygonToTriangles(const vector<point3>& pointsInOrder, vec3 normal) {
+    vector<Triangle> innerTriangles;
+    auto firstPoint = pointsInOrder[0];
+    for ( int j = 2; j < pointsInOrder.size(); j++ ) 
+    {
+        auto secondPoint = pointsInOrder[j-1];
+        auto thirdPoint = pointsInOrder[j];
+        innerTriangles.push_back(
+            Triangle(
+                firstPoint, 
+                secondPoint, 
+                thirdPoint, 
+                normal
+        ));
+    }
+    return innerTriangles;
+}
+
+inline vector<Triangle> polygonToTriangles(const vector<point3>& pointsInOrder) {
+    return polygonToTriangles(pointsInOrder, unit_vector(cross(pointsInOrder[0], pointsInOrder[1])));
+}
+
 class Polygon : public Hittable {
     public:
-        
+        // Points in clockwise order
         Polygon(vector<point3> pointsInOrder, vec3 normal) 
             : triangles(polygonToTriangles(pointsInOrder, normal)) {};
+
+        Polygon(vector<point3> pointsInOrder) 
+            : triangles(polygonToTriangles(pointsInOrder)) {};
         
         virtual bool hit(
             const ray& r, double t_min, double t_max, HitRecord& rec) const override {
@@ -38,23 +63,5 @@ class Polygon : public Hittable {
         vector<Triangle> triangles;
         
 };
-
-inline vector<Triangle> polygonToTriangles(vector<point3> pointsInOrder, vec3 normal) {
-    vector<Triangle> innerTriangles;
-    for ( int j = 2; j < pointsInOrder.size(); j++ ) 
-    {
-        auto firstPoint = pointsInOrder[j-2];
-        auto secondPoint = pointsInOrder[j-1];
-        auto thirdPoint = pointsInOrder[j];
-        innerTriangles.push_back(
-            Triangle(
-                firstPoint, 
-                secondPoint, 
-                thirdPoint, 
-                normal
-        ));
-    }
-    return innerTriangles;
-}
 
 #endif

@@ -13,9 +13,9 @@ struct HitRecord {
     vec3 normal;
     double t;
     bool front_face;
-    shared_ptr<Material> mat_ptr;
     double u;
     double v;
+    shared_ptr<Material> mat_ptr;
 
     inline void set_face_normal(const ray& r, const vec3& outward_normal) {
         front_face = dot(r.direction(), outward_normal) < 0;
@@ -30,18 +30,22 @@ class Hittable {
         virtual bool bounding_box(AABB& output_box) const = 0;
 };
 
-class HittableMaterial : public Hittable {
+class HittableWithMaterial : public Hittable {
     public:
-        HittableMaterial(shared_ptr<Hittable> hittable, shared_ptr<Material> mat) : hittable(hittable), mat_ptr(mat){};
-        bool hit(const ray& r, double t_min, double t_max, HitRecord& rec) const override {
-            if(hittable->hit(r, t_min, t_max, rec)){
+        HittableWithMaterial(){};
+        HittableWithMaterial(shared_ptr<Hittable> hittable, shared_ptr<Material> mat) : hittable(hittable), mat_ptr(mat){};
+        virtual bool hit(const ray& r, double t_min, double t_max, HitRecord& rec) const {
+            if (hittable->hit(r, t_min, t_max, rec)){
                 rec.mat_ptr = mat_ptr;
                 return true;
             }
             return false;
         };
-        bool bounding_box(AABB& output_box) const override {
+        virtual bool bounding_box(AABB& output_box) const {
             return hittable->bounding_box(output_box);
+        };
+        shared_ptr<Material> material() const {
+            return mat_ptr;
         };
 
     private:

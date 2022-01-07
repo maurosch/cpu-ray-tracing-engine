@@ -4,7 +4,7 @@
 #include <vector>
 #include "hittable.h"
 #include "../utils/vec3.h"
-#include "square.h"
+#include "polygon.h"
 
 using namespace std;
 
@@ -36,13 +36,13 @@ class Box : public Hittable {
             
 
             faces = {
-                Square(a, b, c, d),
-                Square(b, a, f, e),
-                Square(a, c, e, g),
+                Polygon({a, b, c, d}),
+                Polygon({b, a, f, e}),
+                Polygon({a, c, e, g}),
 
-                Square(d, b, h, f),
-                Square(c, d, g, h),
-                Square(g, h, e, f),
+                Polygon({d, b, h, f}),
+                Polygon({c, d, g, h}),
+                Polygon({g, h, e, f}),
             };
         };
         
@@ -89,7 +89,7 @@ class Box : public Hittable {
     private:
         point3 firstCorner;
         point3 secondCorner;
-        vector<Square> faces;
+        vector<Polygon> faces;
 };
 
 #endif

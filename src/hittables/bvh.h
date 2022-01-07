@@ -18,9 +18,7 @@ class BvhNode : public Hittable {
         BvhNode(const vector<shared_ptr<Hittable>>& list) : BvhNode(list, 0, list.size())
         {}
 
-        virtual bool hit(
-            const ray& r, double t_min, double t_max, HitRecord& rec) const override;
-
+        virtual bool hit(const ray& r, double t_min, double t_max, HitRecord& rec) const override;
         virtual bool bounding_box(AABB& output_box) const override;
 
     public:
