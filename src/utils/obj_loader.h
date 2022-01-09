@@ -32,7 +32,7 @@ public:
     
     vector<point3> vpos;        // vertices
     vector<vector<int>> face;	// indices de las caras
-    vector<pair<float,float>> tpos;	// coordenadas de texturas
+    vector<pair<double,double>> tpos;	// coordenadas de texturas
     vector<vector<int>> tfac;	// indices de coordenadas de textura por cara
     vector<Direction> norm;	    // normales
     vector<vector<int>> nfac;	// indices de normales por cara

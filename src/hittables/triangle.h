@@ -5,7 +5,7 @@
 #include "../utils/vec3.h"
 #include <cmath>
 
-typedef pair<float,float> uvCoord;
+typedef pair<double,double> uvCoord;
 using namespace std;
 
 class Triangle : public Hittable {
@@ -24,7 +24,6 @@ class Triangle : public Hittable {
 
         virtual bool hit(const ray& r, double t_min, double t_max, HitRecord& rec) const override {
             
-            const float EPSILON = 0.0000001;
             //Implementacion sacada del Shirley
 
             auto a = firstPoint[0] - secondPoint[0]; 

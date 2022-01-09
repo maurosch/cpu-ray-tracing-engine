@@ -11,7 +11,7 @@ using namespace std;
 class TriangleMesh : public Hittable {
 public:
     TriangleMesh(string fileName, point3 origin) : TriangleMesh(fileName, origin, 1, vec3(0,0,0)){};
-    TriangleMesh(string fileName, point3 origin, float scale, vec3 rotate);
+    TriangleMesh(string fileName, point3 origin, double scale, vec3 rotate);
     virtual bool hit(
         const ray& r, double t_min, double t_max, HitRecord& rec) const override;
 

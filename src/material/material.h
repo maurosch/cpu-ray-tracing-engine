@@ -103,7 +103,7 @@ class DiffuseLight : public Material  {
     public:
         DiffuseLight(shared_ptr<Texture> a) : emit(a) {}
         DiffuseLight(color c) : emit(make_shared<SolidColor>(c)) {}
-        DiffuseLight(color c, float intensity) : emit(make_shared<SolidColor>(c * intensity)) {}
+        DiffuseLight(color c, double intensity) : emit(make_shared<SolidColor>(c * intensity)) {}
 
         virtual bool scatter(
             const ray& r_in, const HitRecord& rec, color& attenuation, ray& scattered

@@ -1,9 +1,9 @@
 {
     "filename_output": "img.jpg",
     "format_output": "jpg",
-    "image_width": 1100,
-    "image_height": 600,
-    "samples_per_pixel": 20,
+    "image_width": 640,
+    "image_height": 360,
+    "samples_per_pixel": 100,
     "max_depth": 10,
     "background": [0,0,0],
     "camera": {
@@ -15,56 +15,117 @@
     },
     "world": [
         {
-            "type": "polygon",
-            "points": [
-                [-1000,0,-1000],
-                [1000,0,-1000],
-                [1000,0,1000],
-                [-1000,0,1000]
-            ],
+            "object": {
+                "type": "polygon",
+                "properties":{
+                    "points": [
+                        [-1500,0,-1500],
+                        [1500,0,-1500],
+                        [1500,0,1500],
+                        [-1500,0,1500]
+                    ]
+                }
+            },
             "material": {
                 "type": "lambertian",
-                "color": [0, 0.8, 0.6]
+                "properties": {
+                    "color": [1, 1, 1]
+                }
             }
         },
         {
-            "type": "triangle_mesh",
-            "model": "models/dragon.obj",
-            "rotate": [0, 0, 0],
-            "scale": 2,
-            "position": [0,50,0],
+            "object": {
+                "type": "triangle_mesh",
+                "properties": {
+                    "model": "models/among us.obj",
+                    "rotate": [0, 0, 0],
+                    "scale": 1,
+                    "position": [150,0,0]
+                }
+            },
             "material": {
-                "type": "dielectric",
-                "color": [1,0,0]
+                "type": "lambertian-texture",
+                "properties": {
+                    "texture": {
+                        "type": "image",
+                        "properties": {
+                            "path": "models/among us.jpg"
+                        }
+                    }
+                }
             }
         },
         {
-            "type": "polygon",
-            "points": [
-                [-200,200,100],
-                [-200,200,-0],
-                [-200,0,-0],
-                [-200,0,100]
-            ],
-            "radius": 60,
+            "object": {
+                "type": "triangle_mesh",
+                "properties": {
+                    "model": "models/teapot.obj",
+                    "rotate": [0, 0, 0],
+                    "scale": 6,
+                    "position": [-100,0,0]
+                }
+            },
+            "material": {
+                "type": "lambertian-texture",
+                "properties": {
+                    "texture": {
+                        "type": "image",
+                        "properties": {
+                            "path": "models/teapot.jpg"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "object": {
+                "type": "triangle_mesh",
+                "properties": {
+                    "model": "models/duck.obj",
+                    "rotate": [0, 0, 0],
+                    "scale": 150,
+                    "position": [-400,80,0]
+                }
+            },
+            "material": {
+                "type": "lambertian-texture",
+                "properties": {
+                    "texture": {
+                        "type": "image",
+                        "properties": {
+                            "path": "models/duck.png"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "object": {
+                "type": "sphere",
+                "properties": {
+                    "position": [-200,600,100],
+                    "radius": 150
+                }
+            },
             "material": {
                 "type": "diffuse_light",
-                "color": [1,1,1],
-                "intensity": 10
+                "properties": {
+                    "color": [1,1,1],
+                    "intensity": 10
+                }
             }
-        },
+        }
+    ],
+    "constant_mediums": [
         {
-            "type": "constant_medium",
-            "density": 0.0001,
+            "density": 0.00001,
             "color": [1,1,1],
             "boundary": {
                 "type": "sphere",
-                "position": [0,0,0],
-                "radius": 500
-            },
-            "material": {
-                "type": "solid_color",
-                "color": [1,1,1]
+                "properties":{
+                    "position": [0,0,0],
+                    "radius": 500
+                }
             }
         }
     ]

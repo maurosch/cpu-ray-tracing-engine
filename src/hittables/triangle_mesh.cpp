@@ -12,7 +12,7 @@
 #define PI 3.14159265
 using namespace std;
 
-TriangleMesh::TriangleMesh(string fileName, point3 origin, float scale, vec3 rotate) {
+TriangleMesh::TriangleMesh(string fileName, point3 origin, double scale, vec3 rotate) {
     auto loader = ObjLoader(fileName);
     loader.load();
 
@@ -45,9 +45,9 @@ TriangleMesh::TriangleMesh(string fileName, point3 origin, float scale, vec3 rot
             auto thirdPoint = loader.vpos[loader.face[i][j]];
             innerTriangles.push_back(
                 make_shared<Triangle>(
-                    rotMatrix * (firstPoint+origin) * scale, 
-                    rotMatrix * (secondPoint+origin) * scale, 
-                    rotMatrix * (thirdPoint+origin) * scale,
+                    (rotMatrix * firstPoint * scale) + origin, 
+                    (rotMatrix * secondPoint * scale) + origin, 
+                    (rotMatrix * thirdPoint * scale) + origin,
                     rotMatrix * unit_vector(
                         loader.norm[loader.nfac[i][0]] + 
                         loader.norm[loader.nfac[i][j-1]] + 

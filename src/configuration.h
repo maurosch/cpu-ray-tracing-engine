@@ -26,20 +26,17 @@ public:
         ifstream t(filename);
         RSJresource my_json(t);  
         vector<shared_ptr<Hittable>> worldObjs;
-        for(int i = 0; i < my_json["world"].size(); i++){
-            shared_ptr<HittableWithMaterial> z;
-            if(my_json["world"][i]["type"].as_str() == "constant_medium"){
-                z = make_shared<ConstantMedium>(
-                    parseHittable(my_json["world"][i]["boundary"]),
-                    my_json["world"][i]["density"].as<double>(),
-                    my_json["world"][i]["color"].as_vector<double>()
-                );
-            } else {
-                shared_ptr<Hittable> v = parseHittable(my_json["world"][i]); 
-                shared_ptr<Material> material = parseMaterial(my_json["world"][i]["material"]);
-                z = make_shared<HittableWithMaterial>(v, material);
-            }
-            worldObjs.push_back(z);
+        for(auto& v : my_json["world"].as_array()){
+            shared_ptr<Hittable> object = parseHittable(v["object"]); 
+            shared_ptr<Material> material = parseMaterial(v["material"]);
+            worldObjs.push_back(make_shared<HittableWithMaterial>(object, material));
+        }
+        for(auto& v : my_json["constant_mediums"].as_array()){
+            worldObjs.push_back(make_shared<ConstantMedium>(
+                parseHittable(v["boundary"]),
+                v["density"].as<double>(),
+                v["color"].as_vector<double>()
+            ));
         }
         GraphicsEngineConfiguration conf;
         conf.world = make_shared<BvhNode>(worldObjs);
@@ -60,16 +57,7 @@ public:
             my_json["camera"]["dist_to_focus"].as<double>()
         );
 
-        const auto outputFormat = my_json["format_output"].as_str();
-        const auto outputName = my_json["filename_output"].as_str();
-        if(outputFormat == "jpg")
-            imageWriter = make_shared<JPGWriter>(outputName);
-        else if(outputFormat == "png")
-            imageWriter = make_shared<PNGWriter>(outputName);
-        else if(outputFormat == "ppm")
-            imageWriter = make_shared<PPMWriter>(outputName);
-        else 
-            throw invalid_argument( "wrong type output format" );
+        imageWriter = parseImageWriter(my_json["format_output"].as_str(), my_json["filename_output"].as_str());
 
         cout << "done!" << endl;
         return conf;
@@ -77,88 +65,107 @@ public:
 private:
     string filename;
 
+    shared_ptr<ImageWriter> parseImageWriter(string outputFormat, string outputName){
+        if(outputFormat == "jpg")
+            return make_shared<JPGWriter>(outputName);
+        else if(outputFormat == "png")
+            return make_shared<PNGWriter>(outputName);
+        else if(outputFormat == "ppm")
+            return make_shared<PPMWriter>(outputName);
+        else 
+            throw invalid_argument(ERROR_MESSAGE_TYPE_NOT_RECOGNISED("Format", outputFormat));
+    }
+
     shared_ptr<Hittable> parseHittable(RSJresource& my_json){
         auto type = my_json["type"].as_str();
+        auto properties = my_json["properties"];
+
         if(type == "sphere"){
             return make_shared<Sphere>(
-                my_json["position"].as_vector<double>(),
-                my_json["radius"].as<double>()
+                properties["position"].as_vector<double>(),
+                properties["radius"].as<double>()
             );
         }
         else if(type == "triangle_mesh"){
             return make_shared<TriangleMesh>(
-                my_json["model"].as_str(),
-                my_json["position"].as_vector<double>(),
-                my_json["scale"].exists() ? my_json["scale"].as<double>() : 1, 
-                my_json["rotate"].exists() ? my_json["rotate"].as_vector<double>() : vec3(0.0,0.0,0.0)
+                properties["model"].as_str(),
+                properties["position"].as_vector<double>(),
+                properties["scale"].exists() ? properties["scale"].as<double>() : 1, 
+                properties["rotate"].exists() ? properties["rotate"].as_vector<double>() : vec3(0.0,0.0,0.0)
             );
         }
         else if(type == "triangle"){
             return make_shared<Triangle>(
-                my_json["points"][0].as_vector<double>(), 
-                my_json["points"][1].as_vector<double>(), 
-                my_json["points"][2].as_vector<double>()
+                properties["points"][0].as_vector<double>(), 
+                properties["points"][1].as_vector<double>(), 
+                properties["points"][2].as_vector<double>()
             );
         }
         else if(type == "polygon"){
             auto points = vector<vec3>();
-            for(int i = 0; i < my_json["points"].size(); i++)
-                points.push_back(my_json["points"][i].as_vector<double>());
+            for(auto &point : properties["points"].as_array())
+                points.push_back(point.as_vector<double>());
             return make_shared<Polygon>(points);
         }
-        throw invalid_argument( "wrong type hittable in json" );
+        throw invalid_argument(ERROR_MESSAGE_TYPE_NOT_RECOGNISED("Object", type));
     }
 
     shared_ptr<Material> parseMaterial(RSJresource& my_json){
-        auto materialType = my_json["type"].as_str();
+        auto type = my_json["type"].as_str();
+        auto properties = my_json["properties"];
         
-        if(materialType == "lambertian"){
+        if(type == "lambertian"){
             return make_shared<Lambertian>(
-                color(my_json["color"].as_vector<double>())
+                color(properties["color"].as_vector<double>())
             );
         } 
-        else if(materialType == "lambertian-texture"){
+        else if(type == "lambertian-texture"){
             return make_shared<Lambertian>(
-                parseTexture(my_json["texture"])
+                parseTexture(properties["texture"])
             );
         }
-        else if(materialType == "metal"){
-            return make_shared<Metal>(color(my_json["color"].as_vector<double>()));
+        else if(type == "metal"){
+            return make_shared<Metal>(color(properties["color"].as_vector<double>()));
         }
-        else if(materialType == "metal-texture"){
+        else if(type == "metal-texture"){
             return make_shared<Metal>(
-                parseTexture(my_json["texture"])
+                parseTexture(properties["texture"])
             );
         }
-        else if(materialType == "dielectric"){
+        else if(type == "dielectric"){
             return make_shared<Dielectric>(
-                my_json["refraction"].as<double>() 
+                properties["refraction"].as<double>() 
             );
         }
-        else if(materialType == "diffuse_light"){
+        else if(type == "diffuse_light"){
             return make_shared<DiffuseLight>(
-                color(my_json["color"].as_vector<double>()),
-                my_json["intensity"].as<double>()
+                color(properties["color"].as_vector<double>()),
+                properties["intensity"].as<double>()
             );
         }
-        throw invalid_argument("wrong type material in json");
+        throw invalid_argument(ERROR_MESSAGE_TYPE_NOT_RECOGNISED("Material", type));
     }
 
     shared_ptr<Texture> parseTexture(RSJresource& my_json){
-        shared_ptr<Texture> text;
         auto type = my_json["type"].as_str();
+        auto properties = my_json["properties"];
+        
         if(type == "image"){
             return make_shared<ImageTexture>(
-                my_json["path"].as_str()
+                properties["path"].as_str()
             );
         }
         else if(type == "checker"){
             return make_shared<Checker>(
-                color(my_json["color1"].as_vector<double>()),
-                color(my_json["color2"].as_vector<double>())
+                color(properties["color1"].as_vector<double>()),
+                color(properties["color2"].as_vector<double>())
             );
         }
-        return text;
+        throw invalid_argument(ERROR_MESSAGE_TYPE_NOT_RECOGNISED("Texture", type));
+    }
+
+    string ERROR_MESSAGE_TYPE_NOT_RECOGNISED(string fieldName, string type){
+        return fieldName+" type '"+type+"' not recognised in json";
     }
 };
 

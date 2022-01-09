@@ -9,6 +9,7 @@ using namespace std;
 
 int main() {
     shared_ptr<ImageWriter> imageWriter;
+
     auto engine = GraphicsEngine(
         ConfigurationReader("conf.json").read(imageWriter)
     );
