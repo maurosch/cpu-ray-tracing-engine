@@ -1,2 +1,0 @@
-- Filtro gaussiano para suavizar salida.
-- Completar informe.

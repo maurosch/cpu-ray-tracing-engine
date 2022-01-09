@@ -39,16 +39,23 @@ class Triangle : public Hittable {
             auto k = firstPoint[1] - r.origin()[1];
             auto l = firstPoint[2] - r.origin()[2];
 
-            auto M = a*(e*i - h*f) + b*(g*f - d*i) + c*(d*h - e*g);
-            auto t = - ( f *(a*k - j*b) + e*(j*c - a*l) + d*(b*l - k*c) ) / M;
+            auto eiminushf = (e*i - h*f);
+            auto gfminusdi = (g*f - d*i);
+            auto dhminuseg = (d*h - e*g);
+            auto akminusjb = (a*k - j*b);
+            auto jcminusal = (j*c - a*l);
+            auto blminuskc = (b*l - k*c);
+
+            auto M = a*eiminushf + b*gfminusdi + c*dhminuseg;
+            auto t = - (f *akminusjb + e*jcminusal + d*blminuskc) / M;
             if (t < t_min or t > t_max )
                 return false;
             
-            auto gamma = (i*(a*k - j*b) + h*(j*c - a*l) + g*(b*l - k*c)) / M;
+            auto gamma = (i*akminusjb + h*jcminusal + g*blminuskc) / M;
             if (gamma < 0 or gamma > 1)
                 return false;
             
-            auto beta = (j*(e*i - h*f ) + k*(g*f - d*i) + l*(d*h - e*g)) / M;
+            auto beta = (j*eiminushf + k*gfminusdi + l*dhminuseg) / M;
             if (beta < 0 or beta > 1 - gamma)
                 return false;
 
@@ -63,8 +70,6 @@ class Triangle : public Hittable {
 
             rec.u = get<0>(tcoords).first;
             rec.v = get<0>(tcoords).second;
-            //rec.u = (get<0>(tcoords).first * fl + get<1>(tcoords).first * sl + get<2>(tcoords).first * tl) / totall;
-            //rec.v = (get<0>(tcoords).second * fl + get<1>(tcoords).second * sl + get<2>(tcoords).second * tl) / totall;
             return true;
         };
 

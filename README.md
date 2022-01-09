@@ -39,20 +39,20 @@ Possible types with their corresponding attributes:
 
 - sphere
     - position: vec3
-    - radius: 60,
+    - radius: 60
 
 - polygon
-    - points: vec3[]
-    - radius: 60,
+    - points: vec3[]  // in order (depending on clockwise or counter-clockwise will be different normal vector direction)
+    - radius: 60
 
 - triangle_mesh
-    - model: string,
-    - rotate: vec3,
-    - scale: double,
-    - position: vec3,
+    - model: string
+    - rotate: vec3
+    - scale: double
+    - position: vec3
 
 - constant_medium
-    - density: double,
+    - density: double
     - color: color
     - boundary: a hittable object
 
