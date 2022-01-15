@@ -5,14 +5,15 @@ Mostly based in Ray Tracing books from Peter Shirley.
 Edit `conf.json` for adding scene objects or changing visualization options of the engine. 
 
 # COMPILATION
+Standing from the root of the project:
 1. `cmake CMakeLists.txt -B build`
 2. `cmake --build build`
 3. Lastly, to run: `./build/main`
 
 Note: On windows you need to install posix pthreads or you can disable threads with flag `DISABLE_THREADS` when compiling.
 
-## CONFIGURATION FILE (conf.json)
-Format:
+## SCENARY CONFIGURATION
+For the scenary you need to configure the file "conf.json". The format of the file is:
 
 - filename_output: string
 - format_output: string with options: "jpg" or "png" or "ppm",

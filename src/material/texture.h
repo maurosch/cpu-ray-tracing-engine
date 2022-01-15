@@ -3,6 +3,8 @@
 
 #include "../utils/rtweekend.h"
 #include "../utils/vec3.h"
+#include "perlin.h"
+
 
 
 class Texture {
@@ -47,6 +49,20 @@ class Checker : public Texture {
     public:
         shared_ptr<Texture> odd;
         shared_ptr<Texture> even;
+};
+
+class NoiseTexture : public Texture {
+    public:
+        NoiseTexture() {}
+        NoiseTexture(double sc) : scale(sc) {}
+
+        virtual color value(double u, double v, const point3& p) const override {
+            return color(1,1,1) * 0.5 * (1 + sin(scale*p.z() + 10*noise.turb(p)));
+        }
+
+    public:
+        Perlin noise;
+        double scale;
 };
 
 #endif

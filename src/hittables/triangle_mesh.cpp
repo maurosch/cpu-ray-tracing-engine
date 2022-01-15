@@ -19,13 +19,13 @@ TriangleMesh::TriangleMesh(string fileName, point3 origin, double scale, vec3 ro
     rotate = rotate * PI / 180.0;
     matrix3 rotationXMatrix = matrix3({
         {1, 0, 0},
-        {0, cos(rotate[0]), sin(rotate[0])},
-        {0, -sin(rotate[0]), cos(rotate[0])},
+        {0, cos(rotate[0]), -sin(rotate[0])},
+        {0, sin(rotate[0]), cos(rotate[0])},
     });
     matrix3 rotationYMatrix = matrix3({
-        { cos(rotate[1]), 0, -sin(rotate[1]) },
+        { cos(rotate[1]), 0, sin(rotate[1]) },
         { 0, 1, 0 },
-        { sin(rotate[1]), 0, cos(rotate[1]) }
+        { -sin(rotate[1]), 0, cos(rotate[1]) }
     });
     matrix3 rotationZMatrix = matrix3({
         { cos(rotate[2]), -sin(rotate[2]), 0 },

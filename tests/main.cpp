@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include "../src/utils/matrix.h"
 #include "../src/utils/vec3.h"
+#include "../src/utils/obj_loader.h"
+
 
 TEST(MatrixMult, multiplyByIdentityGivesTheSame) {
   vector<vector<double>> m = {{1,0,0},{0,1,0},{0,0,1}};
@@ -27,4 +29,24 @@ TEST(MatrixMult, rot90Y) {
         { sin(angR), 0, cos(angR) }
     });
   EXPECT_TRUE((rotationYMatrix * vec3(1,0,0) - vec3(0,0,1)).near_zero());
+}
+
+TEST(SPLITBYSPACE, emptyShouldReturnOneElementWithEmptyString) {
+  vector<string> res = {""};
+  EXPECT_EQ(splitBySpace(""), res);
+}
+
+TEST(SPLITBYSPACE, stringWithoutSpacesShouldReturnOnlyString) {
+  vector<string> res = {"hola"};
+  EXPECT_EQ(splitBySpace("hola"), res);
+}
+
+TEST(SPLITBYSPACE, stringWithSpacesShouldReturnExpected) {
+  vector<string> res = {"hola", "prueba"};
+  EXPECT_EQ(splitBySpace("hola prueba"), res);
+}
+
+TEST(SPLITBYSPACE, stringWithSpaceOnEndShouldReturnEmptyStringAtEnd) {
+  vector<string> res = {"prueba", ""};
+  EXPECT_EQ(splitBySpace("prueba "), res);
 }

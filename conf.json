@@ -1,13 +1,13 @@
 {
     "filename_output": "img.jpg",
     "format_output": "jpg",
-    "image_width": 640,
-    "image_height": 360,
-    "samples_per_pixel": 100,
+    "image_width": 1280,
+    "image_height": 720,
+    "samples_per_pixel": 4000,
     "max_depth": 10,
     "background": [0,0,0],
     "camera": {
-        "lookfrom" : [1000,1000,1000],
+        "lookfrom" : [1200,1200,1200],
         "lookat": [-50,100,0],
         "vup": [0,1,0],
         "dist_to_focus": 10.0,
@@ -82,7 +82,7 @@
                 "type": "triangle_mesh",
                 "properties": {
                     "model": "models/duck.obj",
-                    "rotate": [0, 0, 0],
+                    "rotate": [0, 90, 0],
                     "scale": 150,
                     "position": [-400,80,0]
                 }
@@ -103,7 +103,7 @@
             "object": {
                 "type": "sphere",
                 "properties": {
-                    "position": [-200,600,100],
+                    "position": [-200,700,100],
                     "radius": 150
                 }
             },

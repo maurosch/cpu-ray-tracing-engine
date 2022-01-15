@@ -3,7 +3,7 @@
 
 #include "hittable.h"
 #include "../utils/vec3.h"
-#include "box.h"
+#include "triangle.h"
 #include "../material/material.h"
 #include "bvh.h"
 using namespace std;

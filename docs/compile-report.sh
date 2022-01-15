@@ -1,0 +1,1 @@
+pandoc report-spanish.md -f markdown-implicit_figures+latex_macros --variable urlcolor=cyan -o report-spanish.pdf

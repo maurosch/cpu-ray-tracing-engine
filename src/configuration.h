@@ -9,6 +9,7 @@
 #include "material/constant_medium.h"
 #include "material/image_texture.h"
 #include "hittables/sphere.h"
+#include "hittables/polygon.h"
 #include "hittables/triangle.h"
 #include "hittables/triangle_mesh.h"
 #include "externals/RSJparser.tcc"

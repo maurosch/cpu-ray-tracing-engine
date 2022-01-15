@@ -1,11 +1,9 @@
 #include "bvh.h"
 
 BvhNode::BvhNode(
-    const std::vector<shared_ptr<Hittable>>& src_objects,
+    vector<shared_ptr<Hittable>>& src_objects,
     size_t start, size_t end
 ) {
-    auto objects = src_objects; // Create a modifiable array of the source scene objects
-
     int axis = random_int(0,2);
     auto comparator = (axis == 0) ? box_x_compare
                     : (axis == 1) ? box_y_compare
@@ -14,22 +12,22 @@ BvhNode::BvhNode(
     size_t object_span = end - start;
 
     if (object_span == 1) {
-        left = objects[start];
-        right = objects[start];
+        left = src_objects[start];
+        right = src_objects[start];
     } else if (object_span == 2) {
-        if (comparator(objects[start], objects[start+1])) {
-            left = objects[start];
-            right = objects[start+1];
+        if (comparator(src_objects[start], src_objects[start+1])) {
+            left = src_objects[start];
+            right = src_objects[start+1];
         } else {
-            left = objects[start+1];
-            right = objects[start];
+            left = src_objects[start+1];
+            right = src_objects[start];
         }
     } else {
-        std::sort(objects.begin() + start, objects.begin() + end, comparator);
+        sort(src_objects.begin() + start, src_objects.begin() + end, comparator);
 
         auto mid = start + object_span/2;
-        left = make_shared<BvhNode>(objects, start, mid);
-        right = make_shared<BvhNode>(objects, mid, end);
+        left = make_shared<BvhNode>(src_objects, start, mid);
+        right = make_shared<BvhNode>(src_objects, mid, end);
     }
 
     AABB box_left, box_right;
