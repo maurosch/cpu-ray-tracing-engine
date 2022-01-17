@@ -1,9 +1,6 @@
 # RAY TRACING ENGINE - Final Project Computer Graphics UBA
 Mostly based in Ray Tracing books from Peter Shirley.
 
-# CONFIGURATION
-Edit `conf.json` for adding scene objects or changing visualization options of the engine. 
-
 # COMPILATION
 Standing from the root of the project:
 1. `cmake CMakeLists.txt -B build`
@@ -12,8 +9,8 @@ Standing from the root of the project:
 
 Note: On windows you need to install posix pthreads or you can disable threads with flag `DISABLE_THREADS` when compiling.
 
-## SCENARY CONFIGURATION
-For the scenary you need to configure the file "conf.json". The format of the file is:
+# CONFIGURATION
+For the scenary and visual options of the engine you need to configure the file "conf.json". The format of the file is:
 
 - filename_output: string
 - format_output: string with options: "jpg" or "png" or "ppm",
@@ -68,19 +65,21 @@ Possible types with their corresponding attributes:
     - color: color
 
 - dielectric
-    - color: color
+    - refraction: double
 
 - lambertian
     - color: color
 
 - metal
     - color: color
+    - fuzziness: double
 
 - lambertian-texture
     - texture: texture
 
 - metal-texture
     - texture: texture
+    - fuzziness: double
 
 ### Properties Texture
 Possible types with their corresponding attributes:
@@ -148,7 +147,7 @@ Possible types with their corresponding attributes:
             "material": {
                 "type": "dielectric",
                 "properties": {
-                    "color": [1,0,0]
+                    "refraction": 0.002
                 }
             }
         },

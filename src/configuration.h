@@ -126,11 +126,15 @@ private:
             );
         }
         else if(type == "metal"){
-            return make_shared<Metal>(color(properties["color"].as_vector<double>()));
+            return make_shared<Metal>(
+                color(properties["color"].as_vector<double>()),
+                properties["fuzziness"].as<double>()
+            );
         }
         else if(type == "metal-texture"){
             return make_shared<Metal>(
-                parseTexture(properties["texture"])
+                parseTexture(properties["texture"]),
+                properties["fuzziness"].as<double>()
             );
         }
         else if(type == "dielectric"){
