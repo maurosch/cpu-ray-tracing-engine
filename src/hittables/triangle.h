@@ -76,7 +76,7 @@ class Triangle : public Hittable {
             return true;
         };
 
-        bool bounding_box(AABB& output_box) const {
+        bool bounding_box(AABB& output_box) const override {
             output_box = AABB(
                 point3(
                     min(min(firstPoint[0], secondPoint[0]), thirdPoint[0]),

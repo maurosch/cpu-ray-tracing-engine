@@ -189,14 +189,12 @@ class vec2 {
         vec2& operator+=(const vec2 &v) {
             e[0] += v.e[0];
             e[1] += v.e[1];
-            e[2] += v.e[2];
             return *this;
         }
 
         vec2& operator*=(const double t) {
             e[0] *= t;
             e[1] *= t;
-            e[2] *= t;
             return *this;
         }
 
@@ -209,7 +207,7 @@ class vec2 {
         }
 
         double length_squared() const {
-            return e[0]*e[0] + e[1]*e[1] + e[2]*e[2];
+            return e[0]*e[0] + e[1]*e[1];
         }
 
         inline static vec2 random() {

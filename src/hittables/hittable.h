@@ -35,14 +35,14 @@ class HittableWithMaterial : public Hittable {
     public:
         HittableWithMaterial(){};
         HittableWithMaterial(shared_ptr<Hittable> hittable, shared_ptr<Material> mat) : hittable(hittable), mat_ptr(mat){};
-        virtual bool hit(const ray& r, double t_min, double t_max, HitRecord& rec) const {
+        virtual bool hit(const ray& r, double t_min, double t_max, HitRecord& rec) const override {
             if (hittable->hit(r, t_min, t_max, rec)){
                 rec.mat_ptr = mat_ptr;
                 return true;
             }
             return false;
         };
-        virtual bool bounding_box(AABB& output_box) const {
+        virtual bool bounding_box(AABB& output_box) const override {
             return hittable->bounding_box(output_box);
         };
         shared_ptr<Material> material() const {

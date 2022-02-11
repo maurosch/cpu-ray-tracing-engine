@@ -46,7 +46,7 @@ class Polygon : public Hittable {
             return false;
         };
 
-        bool bounding_box(AABB& output_box) const {
+        bool bounding_box(AABB& output_box) const override {
             AABB aux;
             triangles[0].bounding_box(output_box);
 

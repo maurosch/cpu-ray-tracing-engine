@@ -37,7 +37,7 @@ class Sphere : public Hittable {
             return true;
         };
 
-        bool bounding_box(AABB& output_box) const {
+        bool bounding_box(AABB& output_box) const override {
             output_box = AABB(
                 center - vec3(radius, radius, radius),
                 center + vec3(radius, radius, radius));

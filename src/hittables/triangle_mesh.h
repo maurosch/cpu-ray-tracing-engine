@@ -21,7 +21,7 @@ public:
 private:
     shared_ptr<BvhNode> hierarchy;
     void load( point3 origin, string fileName );
-    bool bounding_box(AABB& output_box) const;
+    bool bounding_box(AABB& output_box) const override;
     pair<double,double> getUVTextCoords(const point3 p) const;
 };
 

@@ -20,7 +20,7 @@ public:
             phase_function(make_shared<Isotropic>(c))
         {}
 
-    virtual bool hit(const ray& r, double t_min, double t_max, HitRecord& rec) const {
+    virtual bool hit(const ray& r, double t_min, double t_max, HitRecord& rec) const override {
         // Print occasional samples when debugging. To enable, set enableDebug true.
         const bool enableDebug = false;
         const bool debugging = enableDebug && random_double() < 0.00001;
