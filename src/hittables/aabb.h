@@ -6,14 +6,16 @@
 #include "../ray.h"
 using namespace std;
 
+const auto epsPoint = point3(0.0001, 0.0001, 0.0001);
+
 // Axis Aligned Bounding Box
 class AABB {
     public:
         AABB() {}
         AABB(const point3& a, const point3& b) { minimum = a; maximum = b;}
 
-        point3 min() const {return minimum; }
-        point3 max() const {return maximum; }
+        point3 min() const {return minimum - epsPoint; }
+        point3 max() const {return maximum + epsPoint; }
 
         bool hit(const ray& r, double t_min, double t_max) const {
             // Andrew Kensler (Pixar) code

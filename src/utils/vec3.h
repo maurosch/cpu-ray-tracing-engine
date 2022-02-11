@@ -4,6 +4,7 @@
 #include <cmath>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #include "rtweekend.h"
 
@@ -65,7 +66,9 @@ class vec3 {
             return (fabs(e[0]) < s) && (fabs(e[1]) < s) && (fabs(e[2]) < s);
         }
 
-        
+        std::string to_string() {
+            return "[" + std::to_string(e[0]) + "," + std::to_string(e[1]) + "," + std::to_string(e[2]) + "]";
+        }
 
     public:
         double e[3];
@@ -149,6 +152,17 @@ inline vec3 random_in_unit_disk() {
         if (p.length_squared() >= 1) continue;
         return p;
     }
+}
+
+inline vec3 fitInRange(vec3 x, double minR, double maxR) {
+    double maxV = std::max((double)maxR, std::max(x[0], std::max(x[1], x[2])));
+    double minV = std::min((double)minR, std::min(x[0], std::min(x[1], x[2])));
+    double range = maxV - minV;
+    
+    return vec3(
+        clamp(x[0]/range, minR, maxR),
+        clamp(x[1]/range, minR, maxR),
+        clamp(x[2]/range, minR, maxR));
 }
 
 // Type aliases for vec3

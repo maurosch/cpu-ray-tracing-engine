@@ -59,6 +59,10 @@ class Sphere : public Hittable {
             v = theta / pi;
         }
 
+        virtual string info() override {
+            return "Sphere: " + center.to_string() + to_string(radius);
+        }
+
     public:
         point3 center;
         double radius;

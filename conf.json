@@ -3,51 +3,113 @@
     "format_output": "jpg",
     "image_width": 1280,
     "image_height": 720,
-    "samples_per_pixel": 4000,
+    "samples_per_pixel": 5000,
     "max_depth": 50,
-    "background": [0.5,0.5,0.8],
+    "background": [0,0,0],
     "camera": {
-        "lookfrom" : [800,1000,2000],
-        "lookat": [50,150,0],
+        "lookfrom" : [1200,1200,1200],
+        "lookat": [-50,100,0],
         "vup": [0,1,0],
-        "dist_to_focus": 2000.0,
+        "dist_to_focus": 1200.0,
         "aperture": 0.01
     },
     "world": [
         {
             "object": {
-                "type": "sphere",
+                "type": "polygon",
                 "properties":{
-                    "position": [0,-10000,0], 
-                    "radius": 10000
+                    "points": [
+                        [-1500,0,-1500],
+                        [1500,0,-1500],
+                        [1500,0,1500],
+                        [-1500,0,1500]
+                    ]
                 }
             },
             "material": {
                 "type": "lambertian",
                 "properties": {
-                    "color": [0, 0.8, 0.3]
+                    "color": [0.1, 0.8, 0.6]
                 }
             }
         },
         {
             "object": {
-                "type": "triangle_mesh",
+                "type": "polygon",
                 "properties": {
-                    "model": "models/among us.obj",
-                    "rotate": [0, 0, 0],
-                    "scale": 1,
-                    "position": [-300,0,0]
+                    "points": [
+                        [-200,200,100],
+                        [-200,200,0],
+                        [-200,0,0],
+                        [-200,0,100]
+                    ]
                 }
             },
             "material": {
-                "type": "lambertian-texture",
+                "type": "diffuse_light",
                 "properties": {
-                    "texture": {
-                        "type": "image",
-                        "properties": {
-                            "path": "models/among us.jpg"
-                        }
-                    }
+                    "color": [1,1,1],
+                    "intensity": 10
+                }
+            }
+        },
+        {
+            "object": {
+                "type": "polygon",
+                "properties": {
+                    "points": [
+                        [-200,200,-100],
+                        [-200,200,-200],
+                        [-200,0,-200],
+                        [-200,0,-100]
+                    ]
+                }
+            },
+            "material": {
+                "type": "diffuse_light",
+                "properties": {
+                    "color": [1,0,0],
+                    "intensity": 10
+                }
+            }
+        },
+        {
+            "object": {
+                "type": "polygon",
+                "properties": {
+                    "points": [
+                        [-200,200,-300],
+                        [-200,200,-400],
+                        [-200,0,-400],
+                        [-200,0,-300]
+                    ]
+                }
+            },
+            "material": {
+                "type": "diffuse_light",
+                "properties": {
+                    "color": [0,1,0],
+                    "intensity": 10
+                }
+            }
+        },
+        {
+            "object": {
+                "type": "polygon",
+                "properties": {
+                    "points": [
+                        [-200,200, 200],
+                        [-200,200, 300],
+                        [-200,0, 300],
+                        [-200,0, 200]
+                    ]
+                }
+            },
+            "material": {
+                "type": "diffuse_light",
+                "properties": {
+                    "color": [0,0,1],
+                    "intensity": 10
                 }
             }
         },
@@ -58,94 +120,13 @@
                     "model": "models/among us.obj",
                     "rotate": [0, 0, 0],
                     "scale": 1,
-                    "position": [0,0,0]
+                    "position": [100,0,-100]
                 }
             },
             "material": {
                 "type": "dielectric",
                 "properties": {
-                    "refraction": 1.5
-                }
-            }
-        },
-        {
-            "object": {
-                "type": "triangle_mesh",
-                "properties": {
-                    "model": "models/among us.obj",
-                    "rotate": [0, 0, 0],
-                    "scale": 1,
-                    "position": [300,0,0]
-                }
-            },
-            "material": {
-                "type": "metal",
-                "properties": {
-                    "color": [0.7, 0.6, 0.5],
-                    "fuzziness": 0.3
-                }
-            }
-        },
-        {
-            "object": {
-                "type": "triangle_mesh",
-                "properties": {
-                    "model": "models/among us.obj",
-                    "rotate": [0, 0, 0],
-                    "scale": 1,
-                    "position": [-300, 0, -300]
-                }
-            },
-            "material": {
-                "type": "lambertian",
-                "properties": {
-                    "color": [1,1,0]
-                }
-            }
-        },
-        {
-            "object": {
-                "type": "triangle_mesh",
-                "properties": {
-                    "model": "models/among us.obj",
-                    "rotate": [0, 0, 0],
-                    "scale": 1,
-                    "position": [0,0,-300]
-                }
-            },
-            "material": {
-                "type": "metal-texture",
-                "properties": {
-                    "fuzziness": 0.3,
-                    "texture": {
-                        "type": "image",
-                        "properties": {
-                            "path": "models/among us.jpg"
-                        }
-                    }
-                }
-            }
-        },
-        {
-            "object": {
-                "type": "triangle_mesh",
-                "properties": {
-                    "model": "models/among us.obj",
-                    "rotate": [0, 0, 0],
-                    "scale": 1,
-                    "position": [300, 0, -300]
-                }
-            },
-            "material": {
-                "type": "lambertian-texture",
-                "properties": {
-                    "texture": {
-                        "type": "checker",
-                        "properties": {
-                            "color1": [1,1,1],
-                            "color2": [0,0,0]
-                        }
-                    }
+                    "refraction": 0.002
                 }
             }
         }

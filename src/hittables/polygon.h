@@ -39,7 +39,6 @@ class Polygon : public Hittable {
         
         virtual bool hit(
             const ray& r, double t_min, double t_max, HitRecord& rec) const override {
-
             for(int i = 0; i < triangles.size(); i++){
                 if(triangles[i].hit(r, t_min, t_max, rec))
                     return true;
@@ -55,8 +54,15 @@ class Polygon : public Hittable {
                 triangles[i].bounding_box(aux);
                 output_box = AABB::surrounding_box(aux, output_box);
             }
-            
             return true;
+        }
+
+        virtual string info() override {
+            string text = "Polygon: [";
+            for(auto &v : triangles){
+                text += v.info() + ", ";
+            }
+            return text + "]";
         }
 
     private:

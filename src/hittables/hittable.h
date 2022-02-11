@@ -26,6 +26,7 @@ struct HitRecord {
 class Hittable {
     public:
         Hittable(){};
+        virtual string info() = 0;
         virtual bool hit(const ray& r, double t_min, double t_max, HitRecord& rec) const = 0;
         virtual bool bounding_box(AABB& output_box) const = 0;
 };
@@ -47,6 +48,9 @@ class HittableWithMaterial : public Hittable {
         shared_ptr<Material> material() const {
             return mat_ptr;
         };
+        virtual string info() override{
+            return hittable->info();
+        }
 
     private:
         shared_ptr<Material> mat_ptr;

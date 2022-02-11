@@ -6,12 +6,12 @@
 #include <memory>
 #include <cstdlib>
 
-
 // Usings
 
 using std::shared_ptr;
 using std::make_shared;
 using std::sqrt;
+
 
 // Constants
 

@@ -20,6 +20,9 @@ class BvhNode : public Hittable {
 
         virtual bool hit(const ray& r, double t_min, double t_max, HitRecord& rec) const override;
         virtual bool bounding_box(AABB& output_box) const override;
+        virtual string info() override {
+            return "BvhNode";
+        }
 
     public:
         shared_ptr<Hittable> left;

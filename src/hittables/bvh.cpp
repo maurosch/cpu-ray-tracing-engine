@@ -48,7 +48,7 @@ bool BvhNode::bounding_box(AABB& output_box) const {
 bool BvhNode::hit(const ray& r, double t_min, double t_max, HitRecord& rec) const {
     if (!box.hit(r, t_min, t_max))
         return false;
-
+    
     bool hit_left = left->hit(r, t_min, t_max, rec);
     bool hit_right = right->hit(r, t_min, hit_left ? rec.t : t_max, rec);
 

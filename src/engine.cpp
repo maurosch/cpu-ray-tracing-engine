@@ -73,7 +73,7 @@ vec3 GraphicsEngine::write_color(color pixel_color, int samples_per_pixel) {
     g = sqrt(scale * g);
     b = sqrt(scale * b);
 
-    return vec3(clamp(r, 0.0, 0.999), clamp(g, 0.0, 0.999), clamp(b, 0.0, 0.999));
+    return fitInRange(vec3(r, g, b), 0.0, 0.999);
 }
 
 

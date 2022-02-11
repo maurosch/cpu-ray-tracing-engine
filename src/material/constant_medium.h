@@ -71,6 +71,10 @@ public:
         return boundary->bounding_box(output_box);
     }
 
+    virtual string info() override {
+        return "Contant medium with boundary " + boundary->info();
+    }
+
 public:
     shared_ptr<Hittable> boundary;
     shared_ptr<Material> phase_function;

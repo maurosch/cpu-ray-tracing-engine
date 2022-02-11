@@ -23,7 +23,7 @@ class Triangle : public Hittable {
         
 
         virtual bool hit(const ray& r, double t_min, double t_max, HitRecord& rec) const override {
-            
+
             //Implementacion sacada del Shirley
 
             auto a = firstPoint[0] - secondPoint[0]; 
@@ -59,7 +59,9 @@ class Triangle : public Hittable {
             if (beta < 0 or beta > 1 - gamma)
                 return false;
 
+            //rec.set_face_normal(r, dot(r.direction(), normal)/r.direction().length()/normal.length() > 90 ? -normal : normal);
             rec.set_face_normal(r, normal);
+            
             rec.t = t;
             rec.p = r.at(rec.t);
 
@@ -70,6 +72,7 @@ class Triangle : public Hittable {
 
             rec.u = get<0>(tcoords).first;
             rec.v = get<0>(tcoords).second;
+
             return true;
         };
 
@@ -87,6 +90,14 @@ class Triangle : public Hittable {
                     max(max(firstPoint[2], secondPoint[2]), thirdPoint[2])
                 ));
             return true;
+        }
+
+        virtual string info() override {
+            return "Triangle: " + 
+                firstPoint.to_string() + 
+                secondPoint.to_string() +
+                thirdPoint.to_string() + 
+                "normal: " + normal.to_string();
         }
 
     private:

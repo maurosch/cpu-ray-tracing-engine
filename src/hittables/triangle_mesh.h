@@ -14,6 +14,9 @@ public:
     TriangleMesh(string fileName, point3 origin, double scale, vec3 rotate);
     virtual bool hit(
         const ray& r, double t_min, double t_max, HitRecord& rec) const override;
+    virtual string info() override {
+        return "Triangle Mesh";
+    }
 
 private:
     shared_ptr<BvhNode> hierarchy;
