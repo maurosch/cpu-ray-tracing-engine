@@ -1,4 +1,4 @@
-# RAY TRACING ENGINE - Final Project Computer Graphics UBA
+# Ray Tracing Engine
 Mostly based in Ray Tracing books from Peter Shirley.
 
 # Renders
@@ -16,7 +16,7 @@ Standing from the root of the project:
 Note: On windows you need to install posix pthreads or you can disable threads with flag `DISABLE_THREADS` when compiling.
 
 # CONFIGURATION
-For the scenary and visual options of the engine you need to configure the file "conf.json". The format of the file is:
+For the scenary and visual options of the engine you need to configure the file "conf.json". The syntax of the file is:
 
 - filename_output: string
 - format_output: string with options: "jpg" or "png" or "ppm",
@@ -32,7 +32,7 @@ For the scenary and visual options of the engine you need to configure the file 
     - dist_to_focus: double,
     - aperture: double
 - world: array of object with material (see example)
-- constant_mediums: array of constant_mediums (optional)
+- constant_mediums: array of constant mediums
 
 
 Where:  
